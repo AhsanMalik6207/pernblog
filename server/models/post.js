@@ -1,36 +1,28 @@
-export default (sequelize, DataTypes) => {
-  const Post = sequelize.define('Post', {
-    title: {
-      type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Please enter the title for your post'
-      }
+const db = require("./db");
+const { DataTypes, Sequelize } = require("Sequelize");
+
+const Post = db.define(
+  "Post",
+  {
+    id: {
+      type: Sequelize.UUID,
+      primaryKey: true,
+      allowNull: false,
     },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Pease input a post description'
-      }
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'User',
-        key: 'id',
-        as: 'userId',
-      }
-    }
-  }, {});
-  Post.associate = (models) => {
-  Post.belongsTo(models.User, {
-    foreignKey: 'userId',
-    onDelete: 'CASCADE'
-  });
-  Post.hasMany(models.Comment, {
-    foreignKey: 'postId',
-  });
-  };
-  return Post;
-};
+
+    title: DataTypes.STRING,
+
+    description: DataTypes.TEXT,
+
+    userId: DataTypes.INTEGER,
+
+    createdAt: DataTypes.DATE,
+
+    updatedAt: DataTypes.DATE,
+  },
+  {
+    tableName: "Posts",
+  }
+);
+
+module.exports = Post;
