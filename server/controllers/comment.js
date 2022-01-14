@@ -1,28 +1,35 @@
-import model from '../models';
+const Comment = require("../models/comment");
+exports.getAll = async function (req, res) {
+  try {
+    return Comment
+    .findAll()
+    .then(comments => res.status(200).send(comments));
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
 
-const { Comment } = model;
-class Comments{
-  static create(req, res) {
+exports.create = async function (req, res) {
+  try {
     const { comment_text} = req.body
-    const { userId,postId } = req.params
+    const { postId } = req.params
     return Comment
       .create({
         comment_text,
-        userId,
         postId
       })
       .then(comment => res.status(201).send({
         message: `Your comment ${comment_text} has been posted successfully `,
         comment
       }))
-    }
-    static list(req, res) {
-        return Comment
-          .findAll()
-          .then(comments => res.status(200).send(comments));
-    }
-    static modify(req, res) {
-        const { comment_text } = req.body
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
+
+exports.update = async function (req, res) {
+  try {
+    const { comment_text } = req.body
         return Comment
           .findByPk(req.params.commentId)
           .then((comment) => {
@@ -40,9 +47,13 @@ class Comments{
             .catch(error => res.status(400).send(error));
           })
           .catch(error => res.status(400).send(error));
-      }
-      static delete(req, res) {
-        return Comment
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
+exports.delete = async function (req, res) {
+  try {
+    return Comment
           .findByPk(req.params.commentId)
           .then(comment => {
             if(!comment) {
@@ -58,6 +69,8 @@ class Comments{
               .catch(error => res.status(400).send(error));
           })
           .catch(error => res.status(400).send(error))
-      }
-}
-export default Comments;
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
+
