@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 
-exports.getAll = async (req, res) => {
+exports.getAll = async function (req, res) {
   try {
     const posts = await Post.findAll({});
     return res.status(200).json({
@@ -13,15 +13,8 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.create = async (req, res) => {
+exports.create = async function (req, res) {
   try {
-    const post = await Post.create({
-      id: 2,
-      title: "Jane",
-      description: "It is the description",
-      userId: "b2db9937-051d-4dfe-8adb-2e056fd16432",
-    });
-
     return res
       .status(200)
       .json({ status: 200, message: "Post Created Successfully" });
