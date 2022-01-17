@@ -30,8 +30,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      nationality: {
-        allowNull: false,
+      picture: {
         type: Sequelize.STRING
       },
       createdAt: {

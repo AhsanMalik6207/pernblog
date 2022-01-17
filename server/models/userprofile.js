@@ -6,11 +6,7 @@ const Userprofile = db.define(
   {
     firstName: {
       type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Please enter the firstName'
-      }
-    },
+    allowNull: true},
     lastName: {
       type: DataTypes.STRING,
       allowNull: {
@@ -46,12 +42,9 @@ const Userprofile = db.define(
         msg: 'Pease input your bio'
       }
     },
-    nationality: {
+    picture: {
       type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Pease input your nationality'
-      }
+      allowNull: false
     },
   },
   {

@@ -1,31 +1,40 @@
-const Userprofile = require("../models/userprofile");
-const { use } = require("../routes");
+const User = require("../models/userprofile");
+const multer= require("multer");
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) =>{
+    cb(null, './images')},
+    filename:(req, file, cb) =>{
+      cb(null,Date.now() + '--' + file.originalname)
+    }
+});
+// middleware
+const upload = multer({storage:fileStorageEngine})
 exports.create = async function (req, res) {
   try {
-    const { firstName, lastName, email, gender, phoneNo, bio, nationality } = req.body
-    return Userprofile
-      .create({
-        firstName,
-        lastName,
-        email,
-        gender,
-        phoneNo,
-        bio,
-        nationality
-      })
-      .then(userprofile => res.status(201).send({
-        message: `Your profile has been created successfully `,
-        userprofile
-      }))
+      const { firstName, lastName, email, gender, phoneNo,bio, picture} = req.body;
+      const user = await User.create({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          gender: gender,
+          phoneNo: phoneNo,
+          bio: bio,
+          picture: picture
+      });
+      return res
+          .status(200)
+          .json({ status: 200, message: 'User-Profile Created Successfully' });
   } catch (e) {
-    return res.status(400).json({ status: 400, message: e.message });
+      return res.status(400).json({ status: 400, message: e.message });
   }
 };
 
+// update user profile
+
 exports.update = async function (req, res) {
   try {
-    const { firstName, lastName, email, gender, phoneNo, bio, nationality } = req.body
-        return Userprofile
+    const { firstName, lastName, email, gender, phoneNo, bio, picture } = req.body
+        return User
           .findByPk(req.params.userprofileId)
           .then((userprofile) => {
             userprofile.update({
@@ -35,7 +44,7 @@ exports.update = async function (req, res) {
               gender: gender || userprofile.gender,
               phoneNo: phoneNo || userprofile.phoneNo,
               bio: bio || userprofile.bio,
-              nationality: nationality || userprofile.nationality
+              picture: picture || userprofile.picture
             })
             .then((updatedProfile) => {
               res.status(200).send({
@@ -47,7 +56,7 @@ exports.update = async function (req, res) {
                   gender: gender || updatedProfile.gender,
                   phoneNo: phoneNo || updatedProfile.phoneNo,
                   bio: bio || updatedProfile.bio,
-                  nationality: nationality || updatedProfile.nationality
+                  picture: picture || updatedProfile.picture
                 }
               })
             })
@@ -58,9 +67,12 @@ exports.update = async function (req, res) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
+// delete 
+
 exports.delete = async function (req, res) {
   try {
-    return Userprofile
+    return User
     .findByPk(req.params.userprofileId)
     .then(userprofile => {
       if(!userprofile) {

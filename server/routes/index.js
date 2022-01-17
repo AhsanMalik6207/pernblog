@@ -2,5 +2,5 @@ const express = require("express"),
 router = express.Router();
 
 const userprofileRoutes = require("./userprofile")
-router.use("/userprofile",userprofileRoutes);
+router.use("/userprofiles",userprofileRoutes);
 module.exports = router;
