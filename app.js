@@ -11,5 +11,5 @@ app.use(bodyParser.json());
 app.use("/", routes);
 
 const server = app.listen(3000, "localhost", function () {
-  console.log(`Example app listening at http://localhost:${3000}`);
+  console.log(`Blog App listening at http://localhost:${3000}`);
 });
