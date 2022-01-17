@@ -56,7 +56,7 @@ exports.renewaccesstoken = async function (req, res) {
         { username: user.name },
         process.env.JWT_KEY,
         {
-          expiresIn: "20s",
+          expiresIn: "30s",
         }
       );
       return res.json({ success: true, accesstoken });
@@ -67,51 +67,46 @@ exports.renewaccesstoken = async function (req, res) {
       });
     }
   });
+  return res.json({ success: true, accesstoken });
 };
 
 exports.login = async function (req, res) {
   try {
-    User.findOne({ where: { email: req.body.email } })
-      .then((user) => {
-        if (user === null) {
+    User.findOne({ where: { email: req.body.email } }).then((user) => {
+      if (user === null) {
+        res.status(401).json({
+          message: "Invalid credentials!",
+        });
+      } else {
+        if (req.body.password == user.password) {
+          const accesstoken = jwt.sign(
+            {
+              email: user.email,
+              userId: user.id,
+            },
+            process.env.JWT_KEY,
+            { expiresIn: "30s" }
+          );
+          const refreshtoken = jwt.sign(
+            {
+              email: user.email,
+              userId: user.id,
+            },
+            process.env.JWT_REFRESH_KEY,
+            { expiresIn: "1y" }
+          );
+          refreshtokens.push(refreshtoken);
+          res.status(200).json({
+            accesstoken,
+            refreshtoken,
+          });
+        } else {
           res.status(401).json({
             message: "Invalid credentials!",
           });
-        } else {
-          if (req.body.password == user.password) {
-            const accesstoken = jwt.sign(
-              {
-                email: user.email,
-                userId: user.id,
-              },
-              process.env.JWT_KEY,
-              { expiresIn: "20s" }
-            );
-            const refreshtoken = jwt.sign(
-              {
-                email: user.email,
-                userId: user.id,
-              },
-              process.env.JWT_REFRESH_KEY,
-              { expiresIn: "1y" }
-            );
-            refreshtokens.push(refreshtoken);
-            res.status(200).json({
-              accesstoken,
-              refreshtoken,
-            });
-          } else {
-            res.status(401).json({
-              message: "Invalid credentials!",
-            });
-          }
         }
-      })
-      .catch((error) => {
-        res.status(500).json({
-          message: "Something went wrong!",
-        });
-      });
+      }
+    });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
