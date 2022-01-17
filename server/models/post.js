@@ -1,31 +1,24 @@
 const db = require("./db");
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes, Sequelize } = require("Sequelize");
 
 const Post = db.define(
   "Post",
   {
-    title: {
-      type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Please enter the title for your post'
-      }
+    id: {
+      type: Sequelize.UUID,
+      primaryKey: true,
+      allowNull: false,
     },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Pease input a post description'
-      }
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'User',
-        key: 'id',
-        as: 'userId',
-      }
-    }
+
+    title: DataTypes.STRING,
+
+    description: DataTypes.TEXT,
+
+    userId: DataTypes.STRING,
+
+    createdAt: DataTypes.DATE,
+
+    updatedAt: DataTypes.DATE,
   },
   {
     tableName: "Posts",
