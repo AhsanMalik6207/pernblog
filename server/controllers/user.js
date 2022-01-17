@@ -46,28 +46,31 @@ exports.register = async function (req, res) {
 };
 
 exports.renewaccesstoken = async function (req, res) {
-  const refreshtoken = req.body.token;
-  if (!refreshtoken || !refreshtokens.includes(refreshtoken)) {
-    return res.json({ message: "Refresh token not found, login again" });
-  }
-  jwt.verify(refreshtoken, process.env.JWT_REFRESH_KEY, (err, user) => {
-    if (!err) {
-      const accesstoken = jwt.sign(
-        { username: user.name },
-        process.env.JWT_KEY,
-        {
-          expiresIn: "30s",
-        }
-      );
-      return res.json({ success: true, accesstoken });
-    } else {
-      return res.json({
-        success: false,
-        message: "Invalid refresh token",
-      });
+  try {
+    const refreshtoken = req.body.token;
+    if (!refreshtoken || !refreshtokens.includes(refreshtoken)) {
+      return res.json({ message: "Refresh token not found, login again" });
     }
-  });
-  return res.json({ success: true, accesstoken });
+    jwt.verify(refreshtoken, process.env.JWT_REFRESH_KEY, (err, user) => {
+      if (!err) {
+        const accesstoken = jwt.sign(
+          { username: user.name },
+          process.env.JWT_KEY,
+          {
+            expiresIn: "30s",
+          }
+        );
+        return res.json({ success: true, accesstoken });
+      } else {
+        return res.json({
+          success: false,
+          message: "Invalid refresh token",
+        });
+      }
+    });
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
 };
 
 exports.login = async function (req, res) {
