@@ -1,48 +1,23 @@
 {
-<<<<<<< HEAD
-  "development": {
-      "username": "postgres",
-      "password": "root",
-      "database": "blogs",
-      "host": "127.0.0.1",
-      "dialect": "postgres"
-  },
-  "test": {
-    "username": "postgres",
-      "password": "root",
-      "database": "blogs",
-      "host": "127.0.0.1",
-      "dialect": "postgres"
-  },
-  "production": {
-    "username": "postgres",
-    "password": "root",
-    "database": "blogs",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  }
- }
-=======
 	"development": {
 		"username": "postgres",
-		"password": "ROOT",
-		"database": "roles_permissions",
+		"password": "root",
+		"database": "blog",
 		"host": "127.0.0.1",
 		"dialect": "postgres"
 	},
 	"test": {
 		"username": "postgres",
-		"password": "ROOT",
-		"database": "roles_permissions",
+		"password": "root",
+		"database": "blog",
 		"host": "127.0.0.1",
 		"dialect": "postgres"
 	},
 	"production": {
 		"username": "postgres",
-		"password": "ROOT",
-		"database": "roles_permissions",
+		"password": "root",
+		"database": "blog",
 		"host": "127.0.0.1",
 		"dialect": "postgres"
 	}
 }
->>>>>>> master
