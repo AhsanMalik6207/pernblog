@@ -1,16 +1,29 @@
+const Userprofile = require("../models/userprofile");
 const User = require("../models/userprofile");
+
+exports.getAll = async function (req, res) {
+	try {
+		const userprofile = await Userprofile.findAll({});
+		return res.status(200).json({
+			status: 200,
+			data: userprofile,
+			message: 'Succesfully Userprofiles Retrieved',
+		});
+	} catch (e) {
+		return res.status(400).json({ status: 400, message: e.message });
+	}
+};
 
 exports.create = async function (req, res) {
   try {
-      const { firstName, lastName, email, gender, phoneNo,bio, picture} = req.body;
-      const user = await User.create({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
+      const { gender, phonenumber,bio, picture} = req.body;
+      const { userId } = req.params
+      const user = await Userprofile.create({
           gender: gender,
-          phoneNo: phoneNo,
+          phonenumber: phonenumber,
           bio: bio,
-          picture: picture
+          picture: picture,
+          userId:userId
       });
       return res
           .status(200)
@@ -20,32 +33,24 @@ exports.create = async function (req, res) {
   }
 };
 
-// update user profile
-
 exports.update = async function (req, res) {
   try {
-    const { firstName, lastName, email, gender, phoneNo, bio, picture } = req.body
-        return User
+    const { gender, phonenumber,bio, picture} = req.body
+        return Userprofile
           .findByPk(req.params.userprofileId)
           .then((userprofile) => {
             userprofile.update({
-              firstName: firstName || userprofile.firstName,
-              lastName: lastName || userprofile.lastName,
-              email: email || userprofile.email,
               gender: gender || userprofile.gender,
-              phoneNo: phoneNo || userprofile.phoneNo,
+              phonenumber: phonenumber || userprofile.phonenumber,
               bio: bio || userprofile.bio,
               picture: picture || userprofile.picture
             })
             .then((updatedProfile) => {
               res.status(200).send({
-                message: 'profile updated successfully',
+                message: 'User profile updated successfully',
                 data: {
-                  firstName: firstName || updatedProfile.firstName,
-                  lastName: lastName || updatedProfile.lastName,
-                  email: email || updatedProfile.email,
-                  gender: gender || updatedProfile.gender,
-                  phoneNo: phoneNo || updatedProfile.phoneNo,
+                  gender: gender ||updatedProfile.gender,
+                  phonenumber: phonenumber || updatedProfile.phonenumber,
                   bio: bio || updatedProfile.bio,
                   picture: picture || updatedProfile.picture
                 }
@@ -59,8 +64,6 @@ exports.update = async function (req, res) {
   }
 };
 
-// delete 
-
 exports.delete = async function (req, res) {
   try {
     return User
@@ -68,7 +71,7 @@ exports.delete = async function (req, res) {
     .then(userprofile => {
       if(!userprofile) {
         return res.status(400).send({
-        message: 'profile Not Found',
+        message: 'User profile Not Found',
         });
       }
       return userprofile
