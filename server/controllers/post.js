@@ -22,3 +22,26 @@ exports.create = async function (req, res) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+exports.delete = async function (req, res) {
+  try {
+    return Post.findByPk(req.params.postId)
+      .then((post) => {
+        if (!post) {
+          return res.status(400).send({
+            message: "Post Not Found.",
+          });
+        }
+        return post
+          .destroy()
+          .then(() =>
+            res.status(200).send({
+              message: "Post successfully deleted",
+            })
+          )
+          .catch((error) => res.status(400).send(error));
+      })
+      .catch((error) => res.status(400).send(error));
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
