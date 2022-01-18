@@ -14,6 +14,8 @@ if (config.use_env_variable) {
 		config
 	);
 }
+<<<<<<< HEAD
+=======
 // db.Post = require("./post")(sequelize, Sequelize.DataTypes);
 // console.log(db, "@db");
 // db.Post.associate(db);
@@ -37,4 +39,5 @@ if (config.use_env_variable) {
 
 // // module.exports = db;
 
+>>>>>>> master
 module.exports = sequelize;
