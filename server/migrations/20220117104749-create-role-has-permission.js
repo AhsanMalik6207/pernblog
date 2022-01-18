@@ -22,7 +22,7 @@ module.exports = {
 				references: {
 					model: 'Permissions',
 					key: 'id',
-					as: 'permId',
+					as: 'permissionId',
 				},
 			},
 			createdAt: {
@@ -36,5 +36,5 @@ module.exports = {
 		});
 	},
 	down: (queryInterface) /* , Sequelize */ =>
-		queryInterface.dropTable('Role_Has_Permissions'),
+		queryInterface.dropTable('Rolehaspermissions'),
 };

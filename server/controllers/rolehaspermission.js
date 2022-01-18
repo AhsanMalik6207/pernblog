@@ -1,12 +1,11 @@
-const rolePermission = require('../models/role_has_permissions');
+const Rolehaspermission = require('../models/rolehaspermission');
 
 exports.getAll = async function (req, res) {
 	try {
-		const rolepermission = await rolePermission.findAll({});
-		// console.log('params are', req.params);
+		const rolehaspermission = await Rolehaspermission.findAll({});
 		return res.status(200).json({
 			status: 200,
-			data: rolepermission,
+			data: rolehaspermission,
 			message: 'Succesfully permissions Retrieved',
 		});
 	} catch (e) {
@@ -16,11 +15,10 @@ exports.getAll = async function (req, res) {
 
 exports.create = async function (req, res) {
 	try {
-		const { permission_Name } = req.body;
-		const { roleId, permId } = req.params;
-		const permission = await rolePermission.create({
+		const { roleId, permissionId } = req.params;
+		const rolehaspermission = await Rolehaspermission.create({
 			roleId: roleId,
-			permId: permId,
+			permissionId: permissionId,
 		});
 		return res.status(200).json({
 			status: 200,

@@ -1,21 +1,16 @@
-const Catagory = require("../models/catagory");
+const Category = require("../models/category");
 const { Op } = require("sequelize");
-
-////Function for Search///////
 
 exports.search = async function (req, res) {
   try {
-    
     const key = req.body.key;
-
-    const items = await Catagory.findAll({
+    const items = await Category.findAll({
       where: {
-        Name: {
+        categoryname: {
           [Op.iLike]: `%${key}%`
         }
       }
     });
-
     return res.status(200).json({
       status: 200,
       data: items,
@@ -25,15 +20,14 @@ exports.search = async function (req, res) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
-///////Function for Search End/////
 
 exports.getAll = async function (req, res) {
   try {
-    const items = await Catagory.findAll({});
+    const items = await Category.findAll({});
     return res.status(200).json({
       status: 200,
       data: items,
-      message: "Succesfully Post Retrieved",
+      message: "Succesfully Category Retrieved",
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -42,29 +36,29 @@ exports.getAll = async function (req, res) {
 
 exports.create = async function (req, res) {
   try {
-    const { Name} = req.body;
-    const CatagoryPost = await Catagory.create({
-      Name: Name,
+    const { categoryname} = req.body;
+    const CategoryPost = await Category.create({
+      categoryname: categoryname,
     });
-    return res.status(200).json({ status: 200, data: CatagoryPost});
+    return res.status(200).json({ status: 200, data: CategoryPost});
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
 exports.update = async function (req, res) {
   try {
-    const { Name } = req.body;
-        return Catagory
-          .findByPk(req.params.CatagoryId)
-          .then((catagory) => {
-            catagory.update({
-              Name:Name || catagory.Name,
+    const { categoryname } = req.body;
+        return Category
+          .findByPk(req.params.categoryId)
+          .then((category) => {
+            category.update({
+              categoryname:categoryname || category.categoryname,
             })
-            .then((updatedCatagory) => {
+            .then((updatedCategory) => {
               res.status(200).send({
-                message: 'Post updated successfully',
+                message: 'Category updated successfully',
                 data: {
-                 Name:Name || updatedCatagory.Name,
+                 categoryname:categoryname || updatedCategory.categoryname,
                 }
               })
             })
@@ -77,18 +71,18 @@ exports.update = async function (req, res) {
 };
 exports.delete = async function (req, res) {
   try {
-    return Catagory
-    .findByPk(req.params.CatagoryId)
-    .then(catagory => {
-      if(!catagory) {
+    return Category
+    .findByPk(req.params.categoryId)
+    .then(category => {
+      if(!category) {
         return res.status(400).send({
-        message: 'Catagory Not Found',
+        message: 'Category Not Found',
         });
       }
-      return catagory
+      return category
         .destroy()
         .then(() => res.status(200).send({
-          message: 'Catagory successfully deleted'
+          message: 'Category successfully deleted'
         }))
         .catch(error => res.status(400).send(error));
     })

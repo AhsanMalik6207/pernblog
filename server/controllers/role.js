@@ -2,10 +2,12 @@ const Role = require('../models/role');
 
 exports.create = async function (req, res) {
 	try {
-		const { role_Name, role_Description } = req.body;
+		const { rolename, roledescription } = req.body;
+		const { userId} = req.params
 		const role = await Role.create({
-			role_Name: role_Name,
-			role_Description: role_Description,
+			rolename: rolename,
+			roledescription: roledescription,
+			userId: userId,
 		});
 		return res
 			.status(200)
@@ -18,7 +20,6 @@ exports.create = async function (req, res) {
 exports.getAll = async function (req, res) {
 	try {
 		const roles = await Role.findAll({});
-
 		return res.status(200).json({
 			status: 200,
 			data: roles,
@@ -32,7 +33,6 @@ exports.getAll = async function (req, res) {
 exports.delete = async function (req, res) {
 	try {
 		return Role.findByPk(req.params.roleId)
-
 			.then((role) => {
 				if (!role) {
 					return res.status(400).send({
@@ -56,22 +56,20 @@ exports.delete = async function (req, res) {
 
 exports.update = async function (req, res) {
 	try {
-		const { role_Name, role_Description } = req.body;
+		const { rolename, roledescription } = req.body;
+		const { userId} = req.params
 		return Role.findByPk(req.params.roleId)
 			.then((role) => {
 				role.update({
-					role_Name: role_Name || role.role_Name,
-					role_Description: role_Description || role.role_Description,
+					rolename: rolename || role.rolename,
+					roledescription: roledescription || role.roledescription,
 				})
-					.then((updatedRole) => {
+				.then((updatedRole) => {
 						res.status(200).send({
 							message: 'Role updated successfully',
-
 							data: {
-								role_Name: role_Name || updatedRole.role_Name,
-								role_Description:
-									role_Description ||
-									updatedRole.role_Description,
+								rolename: rolename || updatedRole.rolename,
+								roledescription:roledescription ||updatedRole.roledescription,
 							},
 						});
 					})

@@ -1,13 +1,24 @@
 const Post = require("../models/post");
-
 exports.getAll = async function (req, res) {
   try {
-    const { title,description,image } = req.body;
+    return Post
+    .findAll()
+    .then(posts => res.status(200).send(posts));
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
+
+exports.create = async function (req, res) {
+  try {
+    const { title,description,picture } = req.body
+    const { userId } = req.params
     return Post
       .create({
         title,
         description,
-        image
+        picture,
+        userId
       })
       .then(post => res.status(201).send({
         message: `Your post with the title ${title} has been created successfully `,
@@ -17,28 +28,17 @@ exports.getAll = async function (req, res) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
-exports.create = async function (req, res) {
-  try {
-    const { title, description,image} = req.body;
-    const post = await Post.create({
-      title: title,
-      description: description,
-      image:image
-    });
-    return res.status(200).json({ status: 200, data: post });
-  } catch (e) {
-    return res.status(400).json({ status: 400, message: e.message });
-  }
-};
+
 exports.update = async function (req, res) {
   try {
-    const { title, description } = req.body
+    const { title, description,picture } = req.body
         return Post
-          .findByPk(req.params.PostId)
+          .findByPk(req.params.postId)
           .then((post) => {
             post.update({
               title: title || post.title,
               description: description || post.description,
+              picture: picture || post.picture,
             })
             .then((updatedPost) => {
               res.status(200).send({
@@ -46,6 +46,7 @@ exports.update = async function (req, res) {
                 data: {
                   title: title || updatedPost.title,
                   description: description || updatedPost.description,
+                  picture: picture || updatedPost.picture,
                 }
               })
             })
@@ -59,11 +60,11 @@ exports.update = async function (req, res) {
 exports.delete = async function (req, res) {
   try {
     return Post
-    .findByPk(req.params.PostId)
+    .findByPk(req.params.postId)
     .then(post => {
       if(!post) {
         return res.status(400).send({
-        message: 'Post Not Found',
+        message: 'Post Not Found.',
         });
       }
       return post

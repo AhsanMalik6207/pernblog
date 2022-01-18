@@ -4,7 +4,7 @@ const Controller = require('../controllers/permission');
 
 router.get('/getAll', Controller.getAll);
 router.post('/create', Controller.create);
-router.delete('/:permId/delete', Controller.delete);
-router.put('/:permId/update', Controller.update);
+router.delete('/:permissionId/delete', Controller.delete);
+router.put('/:permissionId/update', Controller.update);
 
 module.exports = router;

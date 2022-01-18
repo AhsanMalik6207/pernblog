@@ -4,6 +4,14 @@ const { DataTypes } = require("sequelize");
 const Userprofile = db.define(
   "Userprofile",
   {
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'User',
+        key: 'id',
+        as: 'userId',
+      }
+    },
     gender: {
       type: DataTypes.STRING,
       allowNull: {
@@ -12,7 +20,7 @@ const Userprofile = db.define(
       }
     },
     phonenumber: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: {
         args: false,
         msg: 'Pease enter your phone number'
@@ -27,8 +35,11 @@ const Userprofile = db.define(
     },
     picture: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
+      allowNull: {
+        args: false,
+        msg: 'Pease upload profile picture'
+      }
+    }
   },
   {
     tableName: "Userprofiles",

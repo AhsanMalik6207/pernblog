@@ -2,11 +2,10 @@ const Permission = require('../models/permission');
 
 exports.getAll = async function (req, res) {
 	try {
-		const permissions = await Permission.findAll({});
-		// console.log('params are', req.params);
+		const permission = await Permission.findAll({});
 		return res.status(200).json({
 			status: 200,
-			data: permissions,
+			data: permission,
 			message: 'Succesfully permissions Retrieved',
 		});
 	} catch (e) {
@@ -16,9 +15,10 @@ exports.getAll = async function (req, res) {
 
 exports.create = async function (req, res) {
 	try {
-		const { permission_Name } = req.body;
+		const { permissionname,permissiondescription } = req.body;
 		const permission = await Permission.create({
-			permission_Name: permission_Name,
+			permissionname: permissionname,
+			permissiondescription: permissiondescription,
 		});
 		return res
 			.status(200)
@@ -30,8 +30,7 @@ exports.create = async function (req, res) {
 
 exports.delete = async function (req, res) {
 	try {
-		return Permission.findByPk(req.params.permId)
-
+		return Permission.findByPk(req.params.permissionId)
 			.then((permission) => {
 				if (!permission) {
 					return res.status(400).send({
@@ -55,20 +54,18 @@ exports.delete = async function (req, res) {
 
 exports.update = async function (req, res) {
 	try {
-		const { permission_Name } = req.body;
-		return Permission.findByPk(req.params.permId)
+		const { permissionname } = req.body;
+		return Permission.findByPk(req.params.permissionId)
 			.then((permission) => {
 				permission
 					.update({
-						permission_Name: permission_Name || permission.title,
+						permissionname: permissionname || permission.permissionname,
 					})
 					.then((updatedPermission) => {
 						res.status(200).send({
 							message: 'Permissions updated successfully',
-
 							data: {
-								permission_Name:
-									permission_Name || updatedPermission.title,
+								permissionname:permissionname || updatedPermission.permissionname,
 							},
 						});
 					})
