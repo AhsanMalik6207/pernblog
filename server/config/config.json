@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "development": {
       "username": "postgres",
       "password": "root",
@@ -21,3 +22,27 @@
     "dialect": "postgres"
   }
  }
+=======
+	"development": {
+		"username": "postgres",
+		"password": "ROOT",
+		"database": "roles_permissions",
+		"host": "127.0.0.1",
+		"dialect": "postgres"
+	},
+	"test": {
+		"username": "postgres",
+		"password": "ROOT",
+		"database": "roles_permissions",
+		"host": "127.0.0.1",
+		"dialect": "postgres"
+	},
+	"production": {
+		"username": "postgres",
+		"password": "ROOT",
+		"database": "roles_permissions",
+		"host": "127.0.0.1",
+		"dialect": "postgres"
+	}
+}
+>>>>>>> master

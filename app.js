@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
+
 const bodyParser = require("body-parser");
+
 const routes = require("./server/routes");
 const multer = require ("multer");
 const { default: file } = require("babel-core/lib/transformation/file");
@@ -22,8 +24,15 @@ app.post('/userprofiles/image',upload.single('picture'),(req, res)=>{
 })
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use("/", routes);
+<<<<<<< HEAD
 app.get('*', (req, res) => res.send('welcome to home page here'));
 const server = app.listen(3005, "localhost", function () {
   console.log(`Example app listening at http://localhost:${3005}`);
+=======
+
+const server = app.listen(3000, "localhost", function () {
+  console.log(`Blog App listening at http://localhost:${3000}`);
+>>>>>>> master
 });
