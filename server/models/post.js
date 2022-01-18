@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-const db = require("./db");
-const { DataTypes, Sequelize } = require("sequelize");
-=======
 const db = require('./db');
 const { DataTypes, Sequelize } = require('sequelize');
->>>>>>> master
 
 const Post = db.define(
 	'Post',
