@@ -1,20 +1,21 @@
 const db = require("./db");
-const { DataTypes, Sequelize } = require("Sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 
 const Post = db.define(
   "Post",
   {
-    id: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      allowNull: false,
-    },
+    // id: {
+    //   type: Sequelize.UUID,
+    //   primaryKey: true,
+    //   allowNull: false,
+    // },
 
     title: DataTypes.STRING,
 
     description: DataTypes.TEXT,
+    image:DataTypes.STRING,
 
-    userId: DataTypes.INTEGER,
+    // userId: DataTypes.INTEGER,
 
     createdAt: DataTypes.DATE,
 

@@ -1,9 +1,8 @@
-import model from '../models';
+const Comment = require("../models/comments");
 
-const { Comment } = model;
-class Comments{
-  static create(req, res) {
-    const { comment_text} = req.body
+exports.create = async function (req, res){
+    try{
+      const { comment_text} = req.body
     const { userId,postId } = req.params
     return Comment
       .create({
@@ -15,13 +14,13 @@ class Comments{
         message: `Your comment ${comment_text} has been posted successfully `,
         comment
       }))
+    }catch (e) {
+      return res.status(400).json({ status: 400, message: e.message });
     }
-    static list(req, res) {
-        return Comment
-          .findAll()
-          .then(comments => res.status(200).send(comments));
-    }
-    static modify(req, res) {
+  };
+  
+    
+    exports.update = async function (req, res){
         const { comment_text } = req.body
         return Comment
           .findByPk(req.params.commentId)
@@ -41,7 +40,7 @@ class Comments{
           })
           .catch(error => res.status(400).send(error));
       }
-      static delete(req, res) {
+      exports.delete = async function (req, res) {
         return Comment
           .findByPk(req.params.commentId)
           .then(comment => {
@@ -59,5 +58,18 @@ class Comments{
           })
           .catch(error => res.status(400).send(error))
       }
-}
-export default Comments;
+      exports.getAll = async function (req, res) {
+        try {
+          const { comment_text } = req.body;
+          return Comment
+            .create({
+              comment_text
+            })
+            .then(comment => res.status(201).send({
+              message: `Your post with the title ${title} has been created successfully `,
+              comment
+            }))
+        } catch (e) {
+          return res.status(400).json({ status: 400, message: e.message });
+        }
+      };
