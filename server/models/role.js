@@ -1,8 +1,8 @@
 const db = require('./db');
 const { DataTypes, Sequelize } = require('sequelize');
 
-const Post = db.define(
-	'Post',
+const Role = db.define(
+	'Role',
 	{
 		// id: {
 		// 	type: Sequelize.UUID,
@@ -10,19 +10,17 @@ const Post = db.define(
 		// 	// allowNull: false,
 		// },
 
-		title: DataTypes.STRING,
+		role_Name: DataTypes.STRING,
 
-		description: DataTypes.TEXT,
-
-		// userId: DataTypes.INTEGER,
+		role_Description: DataTypes.STRING,
 
 		createdAt: DataTypes.DATE,
 
 		updatedAt: DataTypes.DATE,
 	},
 	{
-		tableName: 'Posts',
+		tableName: 'Roles',
 	}
 );
 
-module.exports = Post;
+module.exports = Role;
