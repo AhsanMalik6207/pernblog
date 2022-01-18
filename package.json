@@ -25,7 +25,7 @@
     "multer": "^1.4.4",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^5.12.3"
+    "sequelize": "^5.22.5"
   },
   "repository": {
     "type": "git",
@@ -37,4 +37,3 @@
   "homepage": "https://github.com/Muttarab/Blog-app#readme",
   "description": ""
 }
-
