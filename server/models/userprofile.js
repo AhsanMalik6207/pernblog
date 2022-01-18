@@ -1,45 +1,28 @@
 const db = require("./db");
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 const Userprofile = db.define(
   "Userprofile",
   {
-    firstName: {
-      type: DataTypes.STRING,
-    allowNull: true},
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Pease input a lastname'
-      }
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Pease input a Email'
-      }
-    },
     gender: {
       type: DataTypes.STRING,
       allowNull: {
         args: false,
-        msg: 'Pease input your gender'
+        msg: 'Pease enter a gender'
       }
     },
-    phoneNo: {
+    phonenumber: {
       type: DataTypes.INTEGER,
       allowNull: {
         args: false,
-        msg: 'Pease input YOur phone no'
+        msg: 'Pease enter your phone number'
       }
     },
     bio: {
       type: DataTypes.STRING,
       allowNull: {
         args: false,
-        msg: 'Pease input your bio'
+        msg: 'Pease enter your bio'
       }
     },
     picture: {

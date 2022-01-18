@@ -1,21 +1,21 @@
-const RoleHasPermission = require('../models/RoleHasPermission');
-const Permission = require('../models/Permission');
+const Rolehaspermission = require('../models/rolehaspermission');
+const Permission = require('../models/permission');
 function checkPermission(roleId, permName) {
     return new Promise(
         (resolve, reject) => {
             Permission.findOne({
                 where: {
-                    perm_name: permName
+                    permissionname: permName
                 }
             }).then((perm) => {
-                RoleHasPermission.findOne({
+                Rolehaspermission.findOne({
                     where: {
-                        role_id: roleId,
-                        perm_id: perm.id
+                        roleId: roleId,
+                        permissionId: perm.id
                     }
-                }).then((roleHasPermission) => {
-                    if(roleHasPermission) {
-                        resolve(roleHasPermission);
+                }).then((rolehaspermission) => {
+                    if(rolehaspermission) {
+                        resolve(rolehaspermission);
                     } else {
                         reject({message: 'Forbidden'});
                     }

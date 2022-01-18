@@ -8,9 +8,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
       gender: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       phoneNo: {
@@ -22,6 +24,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       picture: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

@@ -8,13 +8,14 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			role_Name: {
+			rolename: {
+				allowNull: false,
 				type: Sequelize.STRING,
 			},
-			role_Description: {
+			roledescription: {
+				allowNull: false,
 				type: Sequelize.STRING,
 			},
-
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,

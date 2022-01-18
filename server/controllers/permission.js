@@ -1,4 +1,4 @@
-const Permission = require('../models/permissions');
+const Permission = require('../models/permission');
 
 exports.getAll = async function (req, res) {
 	try {

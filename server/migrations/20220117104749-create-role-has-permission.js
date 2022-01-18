@@ -1,15 +1,12 @@
 module.exports = {
 	up: (queryInterface, Sequelize) => {
-		return queryInterface.createTable('Role_Has_Permissions', {
+		return queryInterface.createTable('Rolehaspermissions', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			// roleId: {
-			// 	type: Sequelize.STRING,
-			// },
 			roleId: {
 				type: Sequelize.INTEGER,
 				onDelete: 'CASCADE',
@@ -19,10 +16,7 @@ module.exports = {
 					as: 'roleId',
 				},
 			},
-			// permId: {
-			// 	type: Sequelize.STRING,
-			// },
-			permId: {
+			permissionId: {
 				type: Sequelize.INTEGER,
 				onDelete: 'CASCADE',
 				references: {

@@ -7,7 +7,12 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			permission_Name: {
+			permissionname: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			permissiondescription: {
+				allowNull: false,
 				type: Sequelize.STRING,
 			},
 			createdAt: {

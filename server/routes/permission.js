@@ -3,11 +3,8 @@ const express = require('express'),
 const Controller = require('../controllers/permission');
 
 router.get('/getAll', Controller.getAll);
-
-router.delete('/:permId/delete', Controller.delete);
-
 router.post('/create', Controller.create);
-
+router.delete('/:permId/delete', Controller.delete);
 router.put('/:permId/update', Controller.update);
 
 module.exports = router;

@@ -1,42 +1,14 @@
 const db = require("./db");
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes} = require("sequelize");
 
 const User = db.define(
   "User",
   {
-<<<<<<< HEAD
-    id: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      allowNull: false,
-    },
-
-    name: DataTypes.STRING,
-
-    username: DataTypes.STRING,
-
-    email: DataTypes.STRING,
-
-    password: DataTypes.STRING,
-
-    active: DataTypes.BOOLEAN,
-
-    createdAt: DataTypes.DATE,
-
-    updatedAt: DataTypes.DATE,
-=======
     name: {
       type: DataTypes.STRING,
       allowNull: {
         args: false,
         msg: 'Please enter your name'
-      }
-    },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: {
-        args: false,
-        msg: 'Please enter your username'
       }
     },
     email: {
@@ -65,20 +37,14 @@ const User = db.define(
       validate: {
         isNotShort: (value) => {
           if (value.length < 8) {
-            throw new Error('Password should be at least 8 characters');
+            throw new Error('Password should be at least 8 characters!');
           }
         },
       },
     }
->>>>>>> master
   },
   {
     tableName: "Users",
   }
 );
-<<<<<<< HEAD
-
 module.exports = User;
-=======
-module.exports = User;
->>>>>>> master

@@ -1,23 +1,19 @@
 const express = require("express"),
   router = express.Router();
-<<<<<<< HEAD
-  
-const catagoryRoutes = require('./catagory')
-=======
->>>>>>> master
-const postRoutes = require("./post");
-const commentRoutes = require("./comment");
+
 const userRoutes = require("./user");
 const userprofileRoutes = require("./userprofile");
-router.use("/post", postRoutes);
-router.use("/comment", commentRoutes);
-<<<<<<< HEAD
-router.use("/catagory",catagoryRoutes);
+const categoryRoutes = require('./category')
+const permissionRoutes = require('./permission');
+const roleRoutes = require('./role');
+const rolehaspermissionRoutes = require('./rolehaspermission');
 
-
-module.exports = router;
-=======
 router.use("/user", userRoutes);
 router.use("/userprofile", userprofileRoutes);
+router.use("/category", categoryRoutes);
+router.use('/rolehaspermission', rolehaspermissionRoutes);
+router.use('/role', roleRoutes);
+router.use('/permission', permissionRoutes);
+
+
 module.exports = router;
->>>>>>> master

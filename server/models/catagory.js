@@ -1,20 +1,20 @@
 const db = require("./db");
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes} = require("sequelize");
 
-const Catagory = db.define(
-  "catagories",
+const Category = db.define(
+  "Category",
   {
-
-    Name: DataTypes.STRING,
-
-    createdAt: DataTypes.DATE,
-
-    updatedAt: DataTypes.DATE,
+    categoryname: {
+			type: DataTypes.STRING,
+			allowNull: {
+			  args: false,
+			  msg: 'Please enter category name'
+			}
+		}
   },
-  
   {
-    tableName: "catagories",
+    tableName: "Categories",
   }
 );
 
-module.exports = Catagory;
+module.exports = Category;
