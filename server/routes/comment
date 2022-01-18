@@ -1,12 +1,12 @@
-const express = require("express"),
-  router = express.Router();
+const express = require('express'),
+	router = express.Router();
 
-router.get("/getAll", function (req, res) {
-  res.send("Get All Comments");
+router.get('/getAll', function (req, res) {
+	res.send('Get All Comments');
 });
 
-router.post("/create", function (req, res) {
-  res.send("Create Comment");
+router.post('/create', function (req, res) {
+	res.send('Create Comment');
 });
 
 module.exports = router;
