@@ -1,22 +1,22 @@
 {
   "development": {
-      "username": "admin",
+      "username": "postgres",
       "password": "123",
-      "database": "blogapp",
+      "database": "myBlog",
       "host": "127.0.0.1",
       "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "root",
-    "database": "blogapp",
+    "password": "123",
+    "database": "myBlog",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "root",
-    "database": "blogapp",
+    "password": "123",
+    "database": "myBlog",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }

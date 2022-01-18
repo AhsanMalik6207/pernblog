@@ -15,10 +15,4 @@ if (config.use_env_variable) {
     config
   );
 }
-// db.Post = require("./post")(sequelize, Sequelize.DataTypes);
-// console.log(db, "@db");
-// db.Post.associate(db);
-
-// db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
 module.exports = sequelize;

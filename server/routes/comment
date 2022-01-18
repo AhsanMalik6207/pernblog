@@ -2,7 +2,7 @@ const express = require("express"),
   router = express.Router();
 
 router.get("/getAll", function (req, res) {
-  res.send("Get All Comments");
+  res.send("Get all Comment");
 });
 
 router.post("/create", function (req, res) {

@@ -1,8 +1,8 @@
 const db = require("./db");
 const { DataTypes, Sequelize } = require("sequelize");
 
-const Post = db.define(
-  "Post",
+const User = db.define(
+  "User",
   {
     id: {
       type: Sequelize.UUID,
@@ -10,19 +10,23 @@ const Post = db.define(
       allowNull: false,
     },
 
-    title: DataTypes.STRING,
+    name: DataTypes.STRING,
 
-    description: DataTypes.TEXT,
+    username: DataTypes.STRING,
 
-    userId: DataTypes.INTEGER,
+    email: DataTypes.STRING,
+
+    password: DataTypes.STRING,
+
+    active: DataTypes.BOOLEAN,
 
     createdAt: DataTypes.DATE,
 
     updatedAt: DataTypes.DATE,
   },
   {
-    tableName: "Posts",
+    tableName: "Users",
   }
 );
 
-module.exports = Post;
+module.exports = User;
