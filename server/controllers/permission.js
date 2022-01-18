@@ -1,13 +1,13 @@
-const Post = require('../models/post');
+const Permission = require('../models/permissions');
 
 exports.getAll = async function (req, res) {
 	try {
-		const posts = await Post.findAll({});
+		const permissions = await Permission.findAll({});
 		// console.log('params are', req.params);
 		return res.status(200).json({
 			status: 200,
-			data: posts,
-			message: 'Succesfully Post Retrieved',
+			data: permissions,
+			message: 'Succesfully permissions Retrieved',
 		});
 	} catch (e) {
 		return res.status(400).json({ status: 400, message: e.message });
@@ -16,14 +16,13 @@ exports.getAll = async function (req, res) {
 
 exports.create = async function (req, res) {
 	try {
-		const { title, description } = req.body;
-		const post = await Post.create({
-			title: title,
-			description: description,
+		const { permission_Name } = req.body;
+		const permission = await Permission.create({
+			permission_Name: permission_Name,
 		});
 		return res
 			.status(200)
-			.json({ status: 200, message: 'Post Created Successfully' });
+			.json({ status: 200, message: 'Permission Created Successfully' });
 	} catch (e) {
 		return res.status(400).json({ status: 400, message: e.message });
 	}
@@ -31,19 +30,19 @@ exports.create = async function (req, res) {
 
 exports.delete = async function (req, res) {
 	try {
-		return Post.findByPk(req.params.postId)
+		return Permission.findByPk(req.params.permId)
 
-			.then((post) => {
-				if (!post) {
+			.then((permission) => {
+				if (!permission) {
 					return res.status(400).send({
-						message: 'Post Not Found',
+						message: 'Permission Not Found',
 					});
 				}
-				return post
+				return permission
 					.destroy()
 					.then(() =>
 						res.status(200).send({
-							message: 'Post successfully deleted',
+							message: 'Permission successfully deleted',
 						})
 					)
 					.catch((error) => res.status(400).send(error));
@@ -56,22 +55,20 @@ exports.delete = async function (req, res) {
 
 exports.update = async function (req, res) {
 	try {
-		const { title, description } = req.body;
-		return Post.findByPk(req.params.postId)
-			.then((post) => {
-				post.update({
-					title: title || post.title,
-					description: description || post.description,
-				})
-					.then((updatedPost) => {
-						const des = updatedPost.description;
+		const { permission_Name } = req.body;
+		return Permission.findByPk(req.params.permId)
+			.then((permission) => {
+				permission
+					.update({
+						permission_Name: permission_Name || permission.title,
+					})
+					.then((updatedPermission) => {
 						res.status(200).send({
-							message: 'Post updated successfully',
+							message: 'Permissions updated successfully',
 
 							data: {
-								title: title || updatedPost.title,
-								description:
-									description || updatedPost.description,
+								permission_Name:
+									permission_Name || updatedPermission.title,
 							},
 						});
 					})

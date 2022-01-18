@@ -1,29 +1,15 @@
 module.exports = {
 	up: (queryInterface, Sequelize) => {
-		return queryInterface.createTable('Posts', {
+		return queryInterface.createTable('Permissions', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			title: {
-				allowNull: false,
+			permission_Name: {
 				type: Sequelize.STRING,
 			},
-			description: {
-				allowNull: false,
-				type: Sequelize.STRING,
-			},
-			// userId: {
-			//   type: Sequelize.INTEGER,
-			//   onDelete: 'CASCADE',
-			//   references: {
-			//     model: 'Users',
-			//     key: 'id',
-			//     as: 'userId',
-			//   }
-			// },
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,
@@ -35,5 +21,5 @@ module.exports = {
 		});
 	},
 	down: (queryInterface) /* , Sequelize */ =>
-		queryInterface.dropTable('Posts'),
+		queryInterface.dropTable('Permissions'),
 };
