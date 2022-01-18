@@ -54,18 +54,20 @@ exports.delete = async function (req, res) {
 
 exports.update = async function (req, res) {
 	try {
-		const { permissionname } = req.body;
+		const { permissionname ,permissiondescription} = req.body;
 		return Permission.findByPk(req.params.permissionId)
 			.then((permission) => {
 				permission
 					.update({
 						permissionname: permissionname || permission.permissionname,
+						permissiondescription: permissiondescription || permission.permissiondescription,
 					})
 					.then((updatedPermission) => {
 						res.status(200).send({
 							message: 'Permissions updated successfully',
 							data: {
 								permissionname:permissionname || updatedPermission.permissionname,
+								permissiondescription:permissiondescription || updatedPermission.permissiondescription,
 							},
 						});
 					})

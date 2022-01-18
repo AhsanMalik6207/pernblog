@@ -12,13 +12,14 @@ exports.getAll = async function (req, res) {
 exports.create = async function (req, res) {
   try {
     const { title,description,picture } = req.body
-    const { userId } = req.params
+    const { userId,categoryId } = req.params
     return Post
       .create({
         title,
         description,
         picture,
-        userId
+        userId,
+        categoryId
       })
       .then(post => res.status(201).send({
         message: `Your post with the title ${title} has been created successfully `,

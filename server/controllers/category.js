@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 exports.search = async function (req, res) {
   try {
     const key = req.body.key;
-    const items = await Category.findAll({
+    let items = await Category.findAll({
       where: {
         categoryname: {
           [Op.iLike]: `%${key}%`
@@ -14,7 +14,7 @@ exports.search = async function (req, res) {
     return res.status(200).json({
       status: 200,
       data: items,
-      message: "Categories searched succesfully",
+      message: "Category searched succesfully",
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -27,7 +27,7 @@ exports.getAll = async function (req, res) {
     return res.status(200).json({
       status: 200,
       data: items,
-      message: "Succesfully Category Retrieved",
+      message: "Succesfully Categories Retrieved",
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -47,18 +47,18 @@ exports.create = async function (req, res) {
 };
 exports.update = async function (req, res) {
   try {
-    const { categoryname } = req.body;
+    const { categoryname } = req.body
         return Category
           .findByPk(req.params.categoryId)
           .then((category) => {
             category.update({
-              categoryname:categoryname || category.categoryname,
+              categoryname: categoryname || category.categoryname,
             })
             .then((updatedCategory) => {
               res.status(200).send({
                 message: 'Category updated successfully',
                 data: {
-                 categoryname:categoryname || updatedCategory.categoryname,
+                  categoryname: categoryname|| updatedCategory.categoryname,
                 }
               })
             })
@@ -69,6 +69,7 @@ exports.update = async function (req, res) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
 exports.delete = async function (req, res) {
   try {
     return Category
