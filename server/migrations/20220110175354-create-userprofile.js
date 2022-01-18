@@ -2,7 +2,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Userprofiles', {
       id: {
-        allowNull: false,
+        // allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
@@ -23,10 +23,24 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+<<<<<<< HEAD:server/migrations/20220110175354-create-post.js
+      image:{
+        type:Sequelize.STRING
+=======
       picture: {
         allowNull: false,
         type: Sequelize.STRING
+>>>>>>> master:server/migrations/20220110175354-create-userprofile.js
       },
+      // userId: {
+      //   type: Sequelize.INTEGER,
+      //   onDelete: 'CASCADE',
+      //   references: {
+      //     model: 'Users',
+      //     key: 'id',
+      //     as: 'userId',
+      //   }
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
