@@ -4,14 +4,6 @@ const { DataTypes } = require('sequelize');
 const Role = db.define(
 	'Role',
 	{
-		userId: {
-			type: DataTypes.INTEGER,
-			references: {
-				model: 'User',
-				key: 'id',
-				as: 'userId',
-			}
-		},
 		rolename: {
 			type: DataTypes.STRING,
 			allowNull: {

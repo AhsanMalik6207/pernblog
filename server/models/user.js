@@ -28,6 +28,13 @@ const User = db.define(
         },
       },
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: {
+        args: false,
+        msg: 'Please enter 0 for deactivating user or 1 for activating user'
+      }
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: {
@@ -41,7 +48,15 @@ const User = db.define(
           }
         },
       },
-    }
+    },
+    roleId: {
+			type: DataTypes.INTEGER,
+			references: {
+			  model: 'Role',
+			  key: 'id',
+			  as: 'roleId',
+			}
+		}
   },
   {
     tableName: "Users",

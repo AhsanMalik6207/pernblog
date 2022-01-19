@@ -3,12 +3,10 @@ const Role = require('../models/role');
 exports.create = async function (req, res) {
 	try {
 	  const { rolename,roledescription } = req.body
-	  const { userId } = req.params
 	  return Role
 		.create({
 		  rolename,
 		  roledescription,
-		  userId
 		})
 		.then(role => res.status(201).send({
 		  message: `Your role with the rolename ${rolename} has been created successfully `,
@@ -59,7 +57,6 @@ exports.delete = async function (req, res) {
 exports.update = async function (req, res) {
 	try {
 		const { rolename, roledescription } = req.body;
-		const { userId} = req.params
 		return Role.findByPk(req.params.roleId)
 			.then((role) => {
 				role.update({

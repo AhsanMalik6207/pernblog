@@ -6,7 +6,8 @@ dotenv.config();
 let refreshtokens = [];
 exports.register = async function (req, res) {
     try {
-        const { name, username, email, password } = req.body
+        const { name, email, password,active } = req.body
+        const { roleId } = req.params
         const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
             (err) => {
                 console.log("Error: ", err);
@@ -15,9 +16,10 @@ exports.register = async function (req, res) {
         return User
             .create({
                 name,
-                username,
                 email,
-                password
+                password,
+                active,
+                roleId
             })
             .then(userData => res.status(201).send({
                 success: true,
@@ -81,27 +83,53 @@ exports.login = async function (req, res) {
 };
 exports.renewaccesstoken = async function (req, res) {
     try {
-    const refreshtoken = req.body.token;
-    if (!refreshtoken || !refreshtokens.includes(refreshtoken)) {
-        return res.json({ message: "Refresh token not found, login again" });
-    }
-    jwt.verify(refreshtoken, process.env.JWT_REFRESH_KEY, (err, user) => {
-        if (!err) {
-            const accesstoken = jwt.sign({ username: user.name }, process.env.JWT_KEY, {
-                expiresIn: "1y"
-            });
-            return res.json({ success: true, accesstoken });
-        } else {
-            return res.json({
-                success: false,
-                message: "Invalid refresh token"
-            });
+        const refreshtoken = req.body.token;
+        if (!refreshtoken || !refreshtokens.includes(refreshtoken)) {
+            return res.json({ message: "Refresh token not found, login again" });
         }
-    });
-} catch (e) {
-    return res.status(400).json({ status: 400, message: e.message });
-}
+        jwt.verify(refreshtoken, process.env.JWT_REFRESH_KEY, (err, user) => {
+            if (!err) {
+                const accesstoken = jwt.sign({ username: user.name }, process.env.JWT_KEY, {
+                    expiresIn: "1y"
+                });
+                return res.json({ success: true, accesstoken });
+            } else {
+                return res.json({
+                    success: false,
+                    message: "Invalid refresh token"
+                });
+            }
+        });
+    } catch (e) {
+        return res.status(400).json({ status: 400, message: e.message });
+    }
 };
+
+exports.disabledUser = function(req,res) {
+    const { active } = req.body;
+    try {
+        return User.findByPk(req.params.userId)
+            .then((user) => {
+                user.update({
+                    active: active || user.active
+                })
+                    .then((updatedUser) => {
+                        res.status(200).send({
+                            message: 'User Disabled',
+                            data: {
+                                active: active || updatedUser.active
+                            },
+                        });
+                    })
+                    .catch((error) => res.status(400).send(error));
+            })
+            .catch((error) => res.status(400).send(error));
+    } catch (e) {
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+}
+
+
 
 
 

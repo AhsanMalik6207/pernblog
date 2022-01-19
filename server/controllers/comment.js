@@ -1,4 +1,5 @@
 const Comment = require("../models/comment");
+const jwt = require("jsonwebtoken")
 exports.getAll = async function (req, res) {
   try {
     return Comment
@@ -13,6 +14,10 @@ exports.create = async function (req, res) {
   try {
     const { commenttext} = req.body
     const { postId,userId} = req.params
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+    const useri = decodedToken.userId
+    if (useri == userId) {
     return Comment
       .create({
         commenttext,
@@ -23,7 +28,11 @@ exports.create = async function (req, res) {
         message: `Your comment ${commenttext} has been posted successfully `,
         comment
       }))
-  } catch (e) {
+  }else {
+    res.status(500).json({
+      message: "User is not authenticated to create a Comment!",
+    });
+  }} catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
