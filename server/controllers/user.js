@@ -6,7 +6,7 @@ dotenv.config();
 let refreshtokens = [];
 exports.register = async function (req, res) {
     try {
-        const { name, email, password,active } = req.body
+        const { name, email, password} = req.body
         const { roleId } = req.params
         const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
             (err) => {
@@ -18,7 +18,6 @@ exports.register = async function (req, res) {
                 name,
                 email,
                 password,
-                active,
                 roleId
             })
             .then(userData => res.status(201).send({
@@ -45,7 +44,7 @@ exports.register = async function (req, res) {
     }
 };
 exports.login = async function (req, res) {
-    try {        
+    try {
         User.findOne({ where: { email: req.body.email } }).then(user => {
             if (user === null) {
                 res.status(401).json({
@@ -66,7 +65,8 @@ exports.login = async function (req, res) {
                         accesstoken,
                         refreshtoken
                     });
-                } else {
+                }
+                else {
                     res.status(401).json({
                         message: "Invalid credentials!",
                     });
@@ -105,7 +105,7 @@ exports.renewaccesstoken = async function (req, res) {
     }
 };
 
-exports.disableUser = function(req,res) {
+exports.disableUser = function (req, res) {
     const { active } = req.body;
     try {
         return User.findByPk(req.params.userId)

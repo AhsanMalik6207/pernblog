@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const routes = require("./server/routes");
+
 // const multer = require ("multer");
 // const fileStorageEngine = multer.diskStorage({
 //   destination: (req, file, cb) =>{
@@ -17,7 +18,8 @@ const routes = require("./server/routes");
 //   console.log(req.file);
 //   res.send('Image upload Successfully');
 // })
-app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 app.use(bodyParser.json());
 app.use("/", routes);
 
