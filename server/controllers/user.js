@@ -45,7 +45,7 @@ exports.register = async function (req, res) {
     }
 };
 exports.login = async function (req, res) {
-    try {
+    try {        
         User.findOne({ where: { email: req.body.email } }).then(user => {
             if (user === null) {
                 res.status(401).json({
@@ -105,7 +105,7 @@ exports.renewaccesstoken = async function (req, res) {
     }
 };
 
-exports.disabledUser = function(req,res) {
+exports.disableUser = function(req,res) {
     const { active } = req.body;
     try {
         return User.findByPk(req.params.userId)
