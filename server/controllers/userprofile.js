@@ -1,5 +1,4 @@
 const Userprofile = require("../models/userprofile");
-const User = require("../models/userprofile");
 const jwt = require("jsonwebtoken")
 
 exports.getAll = async function (req, res) {
@@ -34,7 +33,7 @@ exports.create = async function (req, res) {
     });
     return res
       .status(200)
-      .json({ status: 200, message: 'User-Profile Created Successfully' });
+      .json({ status: 200, message: 'User-Profile Created Successfully',user});
   }else {
     res.status(500).json({
       message: "User is not authenticated to create a profile!",
