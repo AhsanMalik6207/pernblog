@@ -105,7 +105,7 @@ exports.renewaccesstoken = async function (req, res) {
     }
 };
 
-exports.disableUser = function (req, res) {
+exports.disableuser = function (req, res) {
     const { active } = req.body;
     try {
         return User.findByPk(req.params.userId)

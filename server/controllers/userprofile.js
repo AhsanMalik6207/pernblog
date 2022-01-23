@@ -19,11 +19,18 @@ exports.create = async function (req, res) {
     console.log(req.file, "Image");
     const picture = req.file.path;
     const { gender, phonenumber, bio } = req.body;
-    const { userId } = req.params
+    const { userId } = req.params;
+    const userprofile = await Userprofile.findAll();
+    const checkuserprofile = userprofile.find(userprofile => userprofile.phonenumber === phonenumber)
     const token = req.headers.authorization.split(" ")[1];
     const decodedToken = jwt.verify(token, process.env.JWT_KEY);
     const useri = decodedToken.userId
     if (useri == userId) {
+      if(checkuserprofile){
+        res.status(500).json({
+          message: "User profile already exists!",
+        });
+      }
     const user = await Userprofile.create({
       gender: gender,
       phonenumber: phonenumber,
