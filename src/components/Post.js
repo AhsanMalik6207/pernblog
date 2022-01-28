@@ -1,6 +1,15 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, makeStyles, Typography, } from "@material-ui/core";
-
+import { Card, CardActionArea, CardActions, CardContent, CardMedia, makeStyles, Typography, } from "@material-ui/core";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 const useStyles = makeStyles((theme) => ({
+    likestyle: {
+        marginRight:'600px',
+        margin: 'auto',
+        display: 'block',
+        width: 'fit-content'
+    },
     card: {
         marginBottom: theme.spacing(5),
     },
@@ -29,15 +38,16 @@ const Post = ({ img, title }) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
-                    Share
-                </Button>
-                <Button size="small" color="primary">
-                    Learn More
-                </Button>
+                <FormControlLabel className={classes.likestyle}
+                    control={<Checkbox icon={<FavoriteBorder />}
+                    checkedIcon={<Favorite />}
+                    name="checkedH" />}
+                    label="Like"
+                />
             </CardActions>
         </Card>
     );
 };
 
 export default Post;
+

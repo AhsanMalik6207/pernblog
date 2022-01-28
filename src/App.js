@@ -1,35 +1,19 @@
-import './App.css';
-import { Grid, makeStyles } from "@material-ui/core";
-import Add from "./components/Add";
-import Feed from "./components/Feed";
-import Leftbar from "./components/Leftbar";
-import Navbar from "./components/Navbar";
-import Rightbar from "./components/Rightbar";
-const useStyles = makeStyles((theme) => ({
-  right: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
-}));
+import Main from './components/Main'
+import Login from './components/Login'
+import Register from './components/Register'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 function App() {
-  const classes = useStyles();
   return (
-    <div>
-      <Navbar />
-      <Grid container>
-        <Grid item sm={2} xs={2}>
-          <Leftbar />
-        </Grid>
-        <Grid item sm={7} xs={10}>
-          <Feed />
-        </Grid>
-        <Grid item sm={3} className={classes.right}>
-          <Rightbar />
-        </Grid>
-      </Grid>
-      <Add />
-    </div>
+    <>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Main} />
+          <Route exact path='/register' component={Register} />
+          <Route exact path='/login' component={Login} />
+        </Switch>
+      </Router>
+    </>
   );
 };
 export default App;
