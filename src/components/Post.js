@@ -2,6 +2,7 @@ import { Card, CardActionArea, CardActions, CardContent, CardMedia, makeStyles, 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Favorite from '@material-ui/icons/Favorite';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 const useStyles = makeStyles((theme) => ({
     likestyle: {
@@ -39,8 +40,8 @@ const Post = ({ img, title }) => {
             </CardActionArea>
             <CardActions>
                 <FormControlLabel className={classes.likestyle}
-                    control={<Checkbox icon={<FavoriteBorder />}
-                    checkedIcon={<Favorite />}
+                    control={<Checkbox icon={<ThumbUpIcon/>}
+                    checkedIcon={<ThumbUpIcon/>}
                     name="checkedH" />}
                     label="Like"
                 />
