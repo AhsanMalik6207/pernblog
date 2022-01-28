@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     card: {
         marginBottom: theme.spacing(5),
     },
+    checkedblue: {
+        color: '#0000FF',
+    },
     media: {
         height: 250,
         [theme.breakpoints.down("sm")]: {
@@ -41,7 +44,7 @@ const Post = ({ img, title }) => {
             <CardActions>
                 <FormControlLabel className={classes.likestyle}
                     control={<Checkbox icon={<ThumbUpIcon/>}
-                    checkedIcon={<ThumbUpIcon/>}
+                    checkedIcon={<ThumbUpIcon className={classes.checkedblue}/>}
                     name="checkedH" />}
                     label="Like"
                 />
