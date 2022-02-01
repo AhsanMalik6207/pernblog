@@ -32,7 +32,10 @@ const useStyle = makeStyles({
         fontSize: 14,
         wordBreak: 'break-word'
     },
-})
+    clamp:{
+        textAlign:'center'
+    }
+})    
 
 const Post = () => {
     const classes = useStyle();
@@ -43,8 +46,8 @@ const Post = () => {
             <Typography className={classes.text}>Tech</Typography>
             <Typography className={classes.heading}>JavaScript</Typography>
             <Typography className={classes.text}>Author: Muttarab Ahmad</Typography>
-            <Clamp withTooltip lines={4}>
-            <Typography className={classes}>JavaScript, often abbreviated JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS. Over 97% of websites use JavaScript on the client side for web page behavior, often incorporating third-party libraries.</Typography>
+            <Clamp withTooltip lines={4} >
+            <Typography className={classes.clamp}>JavaScript, often abbreviated JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS. Over 97% of websites use JavaScript on the client side for web page behavior, often incorporating third-party libraries.</Typography>
             </Clamp>
         </Box>
     )

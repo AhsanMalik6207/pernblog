@@ -9,7 +9,7 @@ const Posts = () => {
                 <Link to={'/postdetail'} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <Post />
                 </Link>
-            </Grid>
+            </Grid> 
         ))
     )
 }

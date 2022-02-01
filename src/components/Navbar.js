@@ -1,5 +1,6 @@
 import { AppBar, Toolbar, Typography, makeStyles, } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const useStyle = makeStyles(theme => ({
     logo: {
         flexGrow: "1",
@@ -22,7 +23,13 @@ const useStyle = makeStyles(theme => ({
 }))
 
 const Navbar = () => {
+    const history = useHistory();
     const classes = useStyle();
+    const auth = localStorage.getItem('user');
+    function logout() {
+        localStorage.clear();
+        history.push('/login')
+    }
     return (
         <AppBar className={classes.component}>
             <Toolbar className={classes.container}>
@@ -35,12 +42,20 @@ const Navbar = () => {
                 <Link to='/about' className={classes.link}>
                     <Typography>ABOUT</Typography>
                 </Link>
-                <Link to='/login' className={classes.link}>
-                    <Typography>LOGIN</Typography>
-                </Link>
-                <Link to='/register' className={classes.link}>
-                    <Typography>REGISTER</Typography>
-                </Link>
+
+                {auth ? <Link onClick={logout} to='/login' className={classes.link}>
+                    <Typography>SIGN OUT</Typography>
+                </Link> :
+                    <>
+                        <Link to='/login' className={classes.link}>
+                            <Typography>LOGIN</Typography>
+                        </Link>
+                        <Link to='/register' className={classes.link}>
+                            <Typography>REGISTER</Typography>
+                        </Link>
+                    </>
+                }
+
             </Toolbar>
         </AppBar>
     )

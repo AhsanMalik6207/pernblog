@@ -45,7 +45,7 @@ const PostDetail = () => {
         <Box className={classes.container}>
             <img src={url} alt="banner" className={classes.image} />
             <Box className={classes.icons}>
-                <Link to='updatepost'><Edit className={classes.icon} color="primary" /></Link>
+                <Link to='/updatepost'><Edit className={classes.icon} color="primary" /></Link>
                 <Delete className={classes.icon} color="error" />
             </Box>
             <Typography className={classes.heading}>JavaScript</Typography>
