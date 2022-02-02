@@ -12,7 +12,6 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
-  // const auth = localStorage.getItem('user');
   return (
     <>
       <BrowserRouter forceRefresh={true}>

@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Typography, makeStyles, } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const useStyle = makeStyles(theme => ({
     logo: {
         flexGrow: "1",
@@ -25,10 +26,7 @@ const useStyle = makeStyles(theme => ({
 const Navbar = () => {
     const history = useHistory();
     const classes = useStyle();
-    const auth = localStorage.getItem('currentUser');
-    if(auth){
-        var parse=JSON.parse(auth);
-    }
+    const user = useSelector((state) => state.user.currentUser);
     function logout() {
         localStorage.clear();
         history.push('/login')
@@ -45,13 +43,13 @@ const Navbar = () => {
                 <Link to='/about' className={classes.link}>
                     <Typography>ABOUT</Typography>
                 </Link>
-                {auth ?
+                {user ?
                     <>
                         <Link onClick={logout} to='/login' className={classes.link}>
                             <Typography>SIGN OUT</Typography>
                         </Link>
                         <Typography className={classes.link}>
-                            {parse.user.name.toUpperCase()}
+                            {user.user.name.toUpperCase()}
                         </Typography>
                     </> :
                     <>

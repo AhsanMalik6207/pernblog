@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, makeStyles, TextareaAutosize, Button, FormControl, InputBase } from '@material-ui/core';
-import { AddCircle } from '@material-ui/icons';
+import { AddCircle as Add } from '@material-ui/icons';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { postFailure, postStart, postSuccess } from "../redux/postRedux";
 const useStyle = makeStyles(theme => ({
     container: {
         padding: '0 100px',
@@ -8,7 +11,7 @@ const useStyle = makeStyles(theme => ({
             padding: 0
         },
     },
-    image: {
+    picture: {
         width: '100%',
         height: '50vh',
         objectFit: 'cover'
@@ -31,27 +34,80 @@ const useStyle = makeStyles(theme => ({
         '&:focus-visible': {
             outline: 'none'
         }
-    }
+    },
+    spanstyle: { color: "red", marginTop: "10px" }
 }));
-
+const initialPost = {
+    title: '',
+    description: '',
+    picture: '',
+}
 const CreatePost = () => {
     const classes = useStyle();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.currentUser);
+    const [postdata, setPostdata] = useState(initialPost);
+    const [image, setImage] = useState('');
+    const { isFetching, error } = useSelector((state) => state.post);
     const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
+    const userid = user.user.id;
+    useEffect(() => {
+        const getImage = async () => {
+            if (image) {
+                console.log(image)
+            }
+        }
+        getImage();
+    }, [image])
+    const savePost = async () => {
+        await createPost(dispatch, postdata);
+    }
+    const handleChange = (e) => {
+        setPostdata({ ...postdata, [e.target.name]: e.target.value });
+    }
+    const createPost = async (dispatch, post) => {
+        dispatch(postStart());
+        try {
+            post.picture = image;
+            const data = new FormData();
+            data.append("picture", image);
+            data.append("title", postdata.title);
+            data.append("description", postdata.description);
+            const result = await axios.post(`http://localhost:8000/post/${userid}/1/create`,
+                data
+            );
+            dispatch(postSuccess(result.data));
+            localStorage.setItem('currentPost', JSON.stringify(result.data))
+            window.location.href = '/'
+        } catch (err) {
+            dispatch(postFailure());
+        }
+    };
     return (
         <Box className={classes.container}>
-            <img src={url} alt="banner" className={classes.image} />
+            <img src={url} alt="banner" className={classes.picture} />
 
             <FormControl className={classes.form}>
-                <AddCircle fontSize="large" color="action" />
-                <InputBase placeholder="Title" className={classes.textfield} />
-                <Button variant="contained" color="primary">Publish</Button>
+                <label htmlFor="fileInput">
+                    <Add className={classes.addIcon} fontSize="large" color="action" />
+                </label>
+                <input
+                    type="file"
+                    id="fileInput"
+                    style={{ display: "none" }}
+                    onChange={(e) => setImage(e.target.files[0])}
+                />
+                <InputBase name='title' placeholder="Title" onChange={(e) => handleChange(e)} className={classes.textfield} />
+                <Button onClick={() => savePost()} disabled={isFetching} variant="contained" color="primary">Publish</Button>
             </FormControl>
-
             <TextareaAutosize
                 rowsMin={5}
+                name='description'
                 placeholder="Tell your story..."
                 className={classes.textarea}
+                onChange={(e) => handleChange(e)}
             />
+            {error && <Box component="span" className={classes.spanstyle}>Post not Created!</Box>}
         </Box>
     )
 }
