@@ -12,16 +12,15 @@ const useStyles = makeStyles((theme) => ({
     btnstyle: { margin: '8px 0' },
     spanstyle:{color:"red", marginTop:"10px"}
 }));
-
 const Register = () => {
-    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
     const classes = useStyles();
     const history=useHistory();
     useEffect(() => {
-        const auth=localStorage.getItem('user')
+        const auth=localStorage.getItem('currentUser')
         if(auth){
             history.push('/')
         }
@@ -64,5 +63,4 @@ const Register = () => {
         </Grid>
     )
 }
-
 export default Register;

@@ -1,46 +1,48 @@
 import React from 'react'
-import { Grid, Paper, Avatar, TextField, Button, Typography, makeStyles,Box} from '@material-ui/core'
+import { Grid, Paper, Avatar, TextField, Button, Typography, makeStyles, Box } from '@material-ui/core'
 import LoginIcon from '@mui/icons-material/Login';
-import { Link } from 'react-router-dom';
-import { useState,useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { Link, useHistory } from 'react-router-dom';
+import { useState ,useEffect} from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginFailure, loginStart, loginSuccess } from "../redux/userRedux";
 
 const useStyles = makeStyles((theme) => ({
     paperStyle: { marginTop: 115, padding: 20, height: '70vh', width: 280, margin: "20px auto", },
     avatarStyle: { backgroundColor: '#1bbd7e' },
     btnstyle: { margin: '8px 0' },
-    spanstyle:{color:"red", marginTop:"10px"}
+    spanstyle: { color: "red", marginTop: "10px" }
 }));
-
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
     const classes = useStyles();
-    const history=useHistory();
+    const dispatch = useDispatch();
+    const history= useHistory();
+    const { isFetching, error } = useSelector((state) => state.user);
     useEffect(() => {
-        const auth=localStorage.getItem('user')
+        const auth=localStorage.getItem('currentUser')
         if(auth){
             history.push('/')
         }
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(false);
+        login(dispatch, { email, password });
+    };
+    const login = async (dispatch, user) => {
+        dispatch(loginStart());
         try {
-        const result = await axios.post("http://localhost:8000/user/login", {
-            email,
-            password,
-        });
-        localStorage.setItem("user",JSON.stringify(result.data))
-        if(result.data){
-            alert("User Logged In Successfully!");
-            history.push('/')
+            const result = await axios.post("http://localhost:8000/user/login", {
+                email,
+                password,
+            });
+            dispatch(loginSuccess(result.data));
+            localStorage.setItem('currentUser',JSON.stringify(result.data))
+            window.location.href='/'
+        } catch (err) {
+            dispatch(loginFailure());
         }
-    } catch (err) {
-      setError(true);
-    }
     };
     return (
         <Grid>
@@ -51,8 +53,8 @@ const Login = () => {
                 </Grid>
                 <TextField label='Email' placeholder='Enter email' type='email' onChange={(e) => setEmail(e.target.value)} fullWidth required />
                 <TextField label='Password' placeholder='Enter password' type='password' onChange={(e) => setPassword(e.target.value)} fullWidth required />
-                <Button type='submit' color='primary' onClick={handleSubmit}  variant="contained" className={classes.btnstyle} fullWidth>Sign in</Button>
-                {error &&  <Box component="span" className={classes.spanstyle}>Something went wrong!</Box>}
+                <Button  color='primary' onClick={handleSubmit} disabled={isFetching} variant="contained" className={classes.btnstyle} fullWidth>Sign in</Button>
+                {error && <Box component="span" className={classes.spanstyle}>Something went wrong!</Box>}
                 <Typography > Do you have an account?
                     <Link to="/register">
                         Register

@@ -7,32 +7,14 @@ import CreatePost from './components/CreatePost'
 import UpdatePost from './components/UpdatePost'
 import PostDetail from './components/PostDetail'
 import { Box } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-// import { useSelector, useDispatch } from 'react-redux'
-// import { incNumber, decNumber } from './actions/index';
 
 function App() {
-    const auth=localStorage.getItem('user');
-  // const mystate = useSelector((state) => state.changeNumber);
-  // const dispatch = useDispatch();
-  // const styleObj = {
-  //   fontSize: 40,
-  //   color: "#4a54f1",
-  // }
+  const user = useSelector((state) => state.user.currentUser);
+  // const auth = localStorage.getItem('user');
   return (
     <>
-      {/* <div>
-        <h1>Increment/Decrement Counter</h1>
-        <div>
-          <a title="decrement" onClick={() => dispatch(decNumber())}>
-            <span style={styleObj}>-</span>
-          </a>
-          <input name="quantity" type="text" value={mystate} />
-          <a title="increment" onClick={() => dispatch(incNumber(5))}>
-            <span style={styleObj}>+</span>
-          </a>
-        </div>
-      </div> */}
       <BrowserRouter forceRefresh={true}>
         <Navbar />
         <Box style={{ margintop: 64 }}>
@@ -40,7 +22,7 @@ function App() {
             <Route
               path="/createpost"
               render={props =>
-                auth ? (
+                user ? (
                   <CreatePost {...props} />
                 ) : (
                   <Redirect to="/login" />
@@ -50,7 +32,7 @@ function App() {
             <Route
               path="/updatepost"
               render={props =>
-                auth ? (
+                user ? (
                   <UpdatePost {...props} />
                 ) : (
                   <Redirect to="/login" />
