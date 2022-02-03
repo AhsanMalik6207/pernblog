@@ -106,31 +106,5 @@ exports.renewaccesstoken = async function (req, res) {
     }
 };
 
-exports.disableuser = function (req, res) {
-    const { active } = req.body;
-    try {
-        return User.findByPk(req.params.userId)
-            .then((user) => {
-                user.update({
-                    active: active || user.active
-                })
-                    .then((updatedUser) => {
-                        res.status(200).send({
-                            message: 'User Disabled',
-                            data: {
-                                active: active || updatedUser.active
-                            },
-                        });
-                    })
-                    .catch((error) => res.status(400).send(error));
-            })
-            .catch((error) => res.status(400).send(error));
-    } catch (e) {
-        return res.status(400).json({ status: 400, message: e.message });
-    }
-}
-
-
-
 
 

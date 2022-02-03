@@ -16,10 +16,6 @@ exports.create = async function (req, res) {
     const picture = req.file.path;
     const { title, description} = req.body
     const { userId, categoryId } = req.params
-    // const token = req.headers.authorization.split(" ")[1];
-    // const decodedToken = jwt.verify(token, process.env.JWT_KEY);
-    // const useri = decodedToken.userId
-    // if (useri == userId) {
       return Post
         .create({
           title,
@@ -32,11 +28,6 @@ exports.create = async function (req, res) {
           message: `Your post with the title ${title} has been created successfully `,
           post
         }))
-    // } else {
-    //   res.status(500).json({
-    //     message: "User is not authenticated to create a Post!",
-    //   });
-    // }
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
