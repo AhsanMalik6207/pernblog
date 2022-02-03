@@ -3,9 +3,9 @@ import { Edit, Delete } from '@material-ui/icons'
 import { Link } from 'react-router-dom';
 const useStyle = makeStyles(theme => ({
     container: {
-        padding: '0 100px',
+        margin: '50px 100px',
         [theme.breakpoints.down('md')]: {
-            padding: 0
+            margin: 0
         },
     },
     image: {

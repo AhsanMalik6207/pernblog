@@ -3,9 +3,9 @@ import { Box, makeStyles, TextareaAutosize, Button, FormControl, InputBase } fro
 import { AddCircle } from '@material-ui/icons';
 const useStyle = makeStyles(theme => ({
     container: {
-        padding: '0 100px',
+        margin: '50px 100px',
         [theme.breakpoints.down('md')]: {
-            padding: 0
+            margin: 0
         },
     },
     image: {

@@ -2,7 +2,7 @@ import { Box, makeStyles, Typography} from '@material-ui/core';
 
 const useStyles = makeStyles({
     banner: {
-        backgroundImage: `url(${'https://www.wallpapertip.com/wmimgs/23-236943_us-wallpaper-for-website.jpg'})`,
+        backgroundImage: `url(${'https://cdn.pixabay.com/photo/2016/08/05/09/31/banner-1571858_960_720.jpg'})`,
         width: '100%',
         height: '50vh',
         backgroundPosition: 'left 0px bottom 0px',

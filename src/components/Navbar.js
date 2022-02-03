@@ -15,6 +15,8 @@ const useStyle = makeStyles(theme => ({
         justifyContent: 'center',
         '&  >*': {
             padding: 20,
+            color: 'black',
+            textDecoration: 'none'
         }
     },
     link: {

@@ -6,9 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postFailure, postStart, postSuccess } from "../redux/postRedux";
 const useStyle = makeStyles(theme => ({
     container: {
-        padding: '0 100px',
+        margin: '50px 100px',
         [theme.breakpoints.down('md')]: {
-            padding: 0
+            margin: 0
         },
     },
     picture: {
@@ -47,14 +47,20 @@ const CreatePost = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.currentUser);
     const [postdata, setPostdata] = useState(initialPost);
+    const [imageurl, setImageurl] = useState();
     const [image, setImage] = useState('');
     const { isFetching, error } = useSelector((state) => state.post);
-    const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
+    const url = imageurl ? imageurl : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
     const userid = user.user.id;
     useEffect(() => {
         const getImage = async () => {
             if (image) {
                 console.log(image)
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                    setImageurl(reader.result)
+                }
+                reader.readAsDataURL(image);
             }
         }
         getImage();
@@ -68,7 +74,6 @@ const CreatePost = () => {
     const createPost = async (dispatch, post) => {
         dispatch(postStart());
         try {
-            post.picture = image;
             const data = new FormData();
             data.append("picture", image);
             data.append("title", postdata.title);
@@ -84,31 +89,34 @@ const CreatePost = () => {
         }
     };
     return (
-        <Box className={classes.container}>
-            <img src={url} alt="banner" className={classes.picture} />
-
-            <FormControl className={classes.form}>
-                <label htmlFor="fileInput">
-                    <Add className={classes.addIcon} fontSize="large" color="action" />
-                </label>
-                <input
-                    type="file"
-                    id="fileInput"
-                    style={{ display: "none" }}
-                    onChange={(e) => setImage(e.target.files[0])}
+        <>
+            <Box className={classes.container}>
+                <Box className={classes.container}>
+                    <img src={url} alt="banner" className={classes.picture} />
+                </Box>
+                <FormControl className={classes.form}>
+                    <label htmlFor="fileInput">
+                        <Add className={classes.addIcon} fontSize="large" color="action" />
+                    </label>
+                    <input
+                        type="file"
+                        id="fileInput"
+                        style={{ display: "none" }}
+                        onChange={(e) => setImage(e.target.files[0])}
+                    />
+                    <InputBase name='title' placeholder="Title" onChange={(e) => handleChange(e)} className={classes.textfield} />
+                    <Button onClick={() => savePost()} disabled={isFetching} variant="contained" color="primary">Publish</Button>
+                </FormControl>
+                <TextareaAutosize
+                    rowsMin={5}
+                    name='description'
+                    placeholder="Tell your story..."
+                    className={classes.textarea}
+                    onChange={(e) => handleChange(e)}
                 />
-                <InputBase name='title' placeholder="Title" onChange={(e) => handleChange(e)} className={classes.textfield} />
-                <Button onClick={() => savePost()} disabled={isFetching} variant="contained" color="primary">Publish</Button>
-            </FormControl>
-            <TextareaAutosize
-                rowsMin={5}
-                name='description'
-                placeholder="Tell your story..."
-                className={classes.textarea}
-                onChange={(e) => handleChange(e)}
-            />
-            {error && <Box component="span" className={classes.spanstyle}>Post not Created!</Box>}
-        </Box>
+                {error && <Box component="span" className={classes.spanstyle}>Post not Created!</Box>}
+            </Box>
+        </>
     )
 }
 

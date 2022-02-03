@@ -1,15 +1,25 @@
 import { Grid } from '@material-ui/core';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Post from '../components/Post';
 import { Link } from 'react-router-dom';
+
 const Posts = () => {
-    let posts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const [postdata, setPostdata] = useState([]);
+    useEffect(() => {
+        const fetchData=async()=>  {
+            const response = await axios.get("http://localhost:8000/post/getAll")
+            setPostdata(response.data);
+        }
+        fetchData()
+    }, [])
     return (
-        posts.map((post) => (
+         postdata.map((post) => (
             <Grid item lg={3} sm={4} xs={12}>
                 <Link to={'/postdetail'} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <Post />
+                    <Post post={post} />
                 </Link>
-            </Grid> 
+            </Grid>
         ))
     )
 }

@@ -37,21 +37,19 @@ const useStyle = makeStyles({
     }
 })    
 
-const Post = () => {
+const Post = ({post}) => {
     const classes = useStyle();
-    const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
+    const url = `http://localhost:8000/${post.picture.slice(7,)}`;
     return (
         <Box className={classes.container}>
-        {/* process.env.BACKENDPATH */}
             <img src={url} alt="wrapper" className={classes.image} />
-            <Typography className={classes.text}>Tech</Typography>
-            <Typography className={classes.heading}>JavaScript</Typography>
+            <Typography className={classes.text}>{new Date(post.createdAt).toDateString()}</Typography>
+            <Typography className={classes.heading}>{post.title}</Typography>
             <Typography className={classes.text}>Author: Muttarab Ahmad</Typography>
             <Clamp withTooltip lines={4} >
-            <Typography className={classes.clamp}>JavaScript, often abbreviated JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS. Over 97% of websites use JavaScript on the client side for web page behavior, often incorporating third-party libraries.</Typography>
+            <Typography className={classes.clamp}>{post.description}</Typography>
             </Clamp>
         </Box>
     )
 }
-
 export default Post;
