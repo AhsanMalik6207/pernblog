@@ -3,6 +3,7 @@ import { Box, makeStyles, TextareaAutosize, Button, FormControl, InputBase } fro
 import { AddCircle as Add } from '@material-ui/icons';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 import { postFailure, postStart, postSuccess } from "../redux/postRedux";
 const useStyle = makeStyles(theme => ({
     container: {
@@ -45,17 +46,17 @@ const initialPost = {
 const CreatePost = () => {
     const classes = useStyle();
     const dispatch = useDispatch();
+    const history = useHistory();
     const user = useSelector((state) => state.user.currentUser);
     const [postdata, setPostdata] = useState(initialPost);
     const [imageurl, setImageurl] = useState();
     const [image, setImage] = useState('');
     const { isFetching, error } = useSelector((state) => state.post);
     const url = imageurl ? imageurl : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
-    const userid = user.user.id;
+    const userid = user.id;
     useEffect(() => {
         const getImage = async () => {
             if (image) {
-                console.log(image)
                 var reader = new FileReader();
                 reader.onloadend = function () {
                     setImageurl(reader.result)
@@ -78,12 +79,15 @@ const CreatePost = () => {
             data.append("picture", image);
             data.append("title", postdata.title);
             data.append("description", postdata.description);
-            const result = await axios.post(`http://localhost:8000/post/${userid}/1/create`,
-                data
+            const result = await axios.post(`http://localhost:8000/post/${userid}/4/create`,
+                data, {
+                headers: {
+                    Authorization: "Bearer " + JSON.parse(localStorage.getItem('currentUser')).accesstoken
+                }
+            }
             );
             dispatch(postSuccess(result.data));
-            localStorage.setItem('currentPost', JSON.stringify(result.data))
-            window.location.href = '/'
+            history.push('/')
         } catch (err) {
             dispatch(postFailure());
         }
@@ -91,9 +95,7 @@ const CreatePost = () => {
     return (
         <>
             <Box className={classes.container}>
-                <Box className={classes.container}>
-                    <img src={url} alt="banner" className={classes.picture} />
-                </Box>
+                <img src={url} alt="banner" className={classes.picture} />
                 <FormControl className={classes.form}>
                     <label htmlFor="fileInput">
                         <Add className={classes.addIcon} fontSize="large" color="action" />

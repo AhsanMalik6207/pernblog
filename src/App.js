@@ -28,9 +28,10 @@ function App() {
                 )
               }
             />
-            <Route
-              path="/updatepost"
-              render={props =>
+             <Route
+              exact
+              path="/updatepost/:id"
+              render={(props) =>
                 user ? (
                   <UpdatePost {...props} />
                 ) : (
@@ -41,7 +42,7 @@ function App() {
             <Route exact path='/' component={Home} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
-            <Route exact path='/postdetail' component={PostDetail} />
+            <Route exact path='/postdetail/:id' component={PostDetail} />
             <Route exact path='/about' component={About} />
           </Switch>
         </Box>

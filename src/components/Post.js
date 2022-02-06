@@ -43,9 +43,9 @@ const Post = ({post}) => {
     return (
         <Box className={classes.container}>
             <img src={url} alt="wrapper" className={classes.image} />
-            <Typography className={classes.text}>{new Date(post.createdAt).toDateString()}</Typography>
+            <Typography className={classes.text}> {new Date(post.createdAt).toDateString()}</Typography>
             <Typography className={classes.heading}>{post.title}</Typography>
-            <Typography className={classes.text}>Author: Muttarab Ahmad</Typography>
+            <Typography className={classes.text}><b>Author:</b> {post.User.name}</Typography>
             <Clamp withTooltip lines={4} >
             <Typography className={classes.clamp}>{post.description}</Typography>
             </Clamp>

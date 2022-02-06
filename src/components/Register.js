@@ -4,6 +4,7 @@ import { Grid, Paper, Avatar, Typography, TextField, Button, makeStyles,Box } fr
 import CreateIcon from '@mui/icons-material/Create';
 import { useState,useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     paperStyle: { marginTop: 115, padding: 20, height: '70vh', width: 280, margin: "20px auto" },
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     spanstyle:{color:"red", marginTop:"10px"}
 }));
 const Register = () => {
+    const user = useSelector((state) => state.user.currentUser);
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -20,8 +22,7 @@ const Register = () => {
     const classes = useStyles();
     const history=useHistory();
     useEffect(() => {
-        const auth=localStorage.getItem('currentUser')
-        if(auth){
+        if(user){
             history.push('/')
         }
     });

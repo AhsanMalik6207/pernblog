@@ -20,9 +20,9 @@ const Login = () => {
     const dispatch = useDispatch();
     const history= useHistory();
     const { isFetching, error } = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user.currentUser);
     useEffect(() => {
-        const auth=localStorage.getItem('currentUser')
-        if(auth){
+        if(user){
             history.push('/')
         }
     });

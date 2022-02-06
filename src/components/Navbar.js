@@ -51,7 +51,7 @@ const Navbar = () => {
                             <Typography>SIGN OUT</Typography>
                         </Link>
                         <Typography className={classes.link}>
-                            {user.user.name.toUpperCase()}
+                            {user.name.toUpperCase()}
                         </Typography>
                     </> :
                     <>
