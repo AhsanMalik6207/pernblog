@@ -1,6 +1,5 @@
 const db = require("./db");
-const { DataTypes, Sequelize } = require("sequelize");
-
+const { DataTypes } = require("sequelize");
 const Post = db.define(
   "Post",
   {
@@ -46,5 +45,4 @@ const Post = db.define(
     tableName: "Posts",
   }
 );
-
 module.exports = Post;

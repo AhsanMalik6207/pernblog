@@ -1,11 +1,46 @@
 const Post = require("../models/post");
-const jwt = require("jsonwebtoken")
+const User = require("../models/user");
+
+exports.getPost = async (request, response) => {
+  try {
+    Post.belongsTo(User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    });
+    User.hasMany(Post, {
+      foreignKey: 'userId',
+    });
+      const post = await Post.findByPk(request.params.id,{
+        include: [{
+          model: User,
+          required: true,
+          attributes:['name']
+         }],
+      });
+      response.status(200).json(post);
+  } catch (error) {
+      response.status(500).json(error)
+  }
+}
 
 exports.getAll = async function (req, res) {
   try {
+    Post.belongsTo(User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    });
+    User.hasMany(Post, {
+      foreignKey: 'userId',
+    });
     return Post
-      .findAll()
-      .then(posts => res.status(200).send(posts));
+      .findAll({
+        include: [{
+          model: User,
+          required: true,
+          attributes:['name']
+         }],
+      })
+      .then(posts =>  res.status(200).send(posts));
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }

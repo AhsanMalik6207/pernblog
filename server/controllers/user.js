@@ -55,16 +55,16 @@ exports.login = async function (req, res) {
                     const accesstoken = jwt.sign({
                         email: user.email,
                         userId: user.id
-                    }, process.env.JWT_KEY, { expiresIn: "1y" })
+                    }, process.env.JWT_KEY, { expiresIn: "10y" })
                     const refreshtoken = jwt.sign({
                         email: user.email,
                         userId: user.id
-                    }, process.env.JWT_REFRESH_KEY, { expiresIn: "1y" })
+                    }, process.env.JWT_REFRESH_KEY, { expiresIn: "10y" })
                     refreshtokens.push(refreshtoken);
                     res.status(200).json({
-                        user,
+                        name:user.name,
+                        id:user.id,
                         accesstoken,
-                        refreshtoken
                     });
                 }
                 else {
@@ -91,7 +91,7 @@ exports.renewaccesstoken = async function (req, res) {
         jwt.verify(refreshtoken, process.env.JWT_REFRESH_KEY, (err, user) => {
             if (!err) {
                 const accesstoken = jwt.sign({ username: user.name }, process.env.JWT_KEY, {
-                    expiresIn: "1y"
+                    expiresIn: "10y"
                 });
                 return res.json({ success: true, accesstoken });
             } else {
