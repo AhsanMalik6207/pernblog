@@ -48,7 +48,6 @@ const PostDetail = ({ match }) => {
     const [imageurl, setImageurl] = useState('');
     let history = useHistory();
     const user = useSelector((state) => state.user.currentUser);
-    const userid = user.id;
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8000/post/${match.params.id}`)
@@ -74,11 +73,12 @@ const PostDetail = ({ match }) => {
 
         <Box className={classes.container}>
             <img src={url} alt="banner" className={classes.image} />
-            {userid == postdata.userId ?
-                <Box className={classes.icons}>
-                    <Link to={`/updatepost/${postdata.id}`}><Edit className={classes.icon} color="primary" /></Link>
-                    <Link><Delete onClick={deleteBlog} className={classes.icon} color="error" /></Link>
-                </Box> : null
+            {   
+                user.id === postdata.userId ?
+                    <Box className={classes.icons}>
+                        <Link to={`/updatepost/${postdata.id}`}><Edit className={classes.icon} color="primary" /></Link>
+                        <Link><Delete onClick={deleteBlog} className={classes.icon} color="error" /></Link>
+                    </Box> : null
             }
             <Typography className={classes.heading}>{postdata.title}</Typography>
             <Box className={classes.subheading}>
