@@ -43,7 +43,8 @@ exports.create = async function (req, res) {
 
 exports.update = async function (req, res) {
   try {
-    const { gender, phonenumber, bio, picture } = req.body
+    const picture = req.file.path;
+    const { gender, phonenumber, bio} = req.body
     return Userprofile
       .findByPk(req.params.userprofileId)
       .then((userprofile) => {
@@ -74,7 +75,7 @@ exports.update = async function (req, res) {
 
 exports.delete = async function (req, res) {
   try {
-    return User
+    return Userprofile
       .findByPk(req.params.userprofileId)
       .then(userprofile => {
         if (!userprofile) {

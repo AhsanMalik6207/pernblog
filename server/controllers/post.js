@@ -70,7 +70,8 @@ exports.create = async function (req, res) {
 
 exports.update = async function (req, res) {
   try {
-    const { title, description, picture } = req.body
+    const picture=req.file.path
+    const { title, description } = req.body
     return Post
       .findByPk(req.params.postId)
       .then((post) => {

@@ -16,6 +16,6 @@ router.get("/getAll", Controller.getAll);
 router.get("/:id", Controller.getPost);
 router.post("/:userId/:categoryId/create", checkAuthMiddleware.checkAuth, upload.single('picture'), Controller.create);
 router.delete("/:postId/delete",Controller.delete);
-router.put("/:postId/update", checkAuthMiddleware.checkAuth,Controller.update);
+router.put("/:postId/update", checkAuthMiddleware.checkAuth,upload.single('picture'),Controller.update);
 
 module.exports = router;

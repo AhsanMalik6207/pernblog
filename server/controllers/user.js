@@ -62,6 +62,7 @@ exports.login = async function (req, res) {
                     }, process.env.JWT_REFRESH_KEY, { expiresIn: "10y" })
                     refreshtokens.push(refreshtoken);
                     res.status(200).json({
+                        email:user.email,
                         name:user.name,
                         id:user.id,
                         accesstoken,
