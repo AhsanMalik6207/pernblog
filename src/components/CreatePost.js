@@ -49,7 +49,7 @@ const CreatePost = () => {
     const history = useHistory();
     const user = useSelector((state) => state.user.currentUser);
     const [postdata, setPostdata] = useState(initialPost);
-    const [imageurl, setImageurl] = useState();
+    const [imageurl, setImageurl] = useState('');
     const [image, setImage] = useState('');
     const { isFetching, error } = useSelector((state) => state.post);
     const url = imageurl ? imageurl : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
@@ -118,6 +118,7 @@ const CreatePost = () => {
                 />
                 {error && <Box component="span" className={classes.spanstyle}>Post not Created!</Box>}
             </Box>
+            
         </>
     )
 }
