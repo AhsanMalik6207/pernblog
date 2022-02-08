@@ -50,9 +50,12 @@ const Navbar = () => {
                         <Link onClick={logout} to='/login' className={classes.link}>
                             <Typography>SIGN OUT</Typography>
                         </Link>
-                        <Typography className={classes.link}>
+                        <Link to='/createuserprofile' className={classes.link}>
+                            <Typography>PROFILE</Typography>
+                        </Link>
+                        {/* <Typography className={classes.link}>
                             {user.name.toUpperCase()}
-                        </Typography>
+                        </Typography> */}
                     </> :
                     <>
                         <Link to='/login' className={classes.link}>

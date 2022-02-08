@@ -44,10 +44,12 @@ const useStyle = makeStyles(theme => ({
 const PostDetail = ({ match }) => {
     const classes = useStyle();
     const [postdata, setPostdata] = useState({});
+    const [flag, setFlag] = useState(false);
     const [username, setUsername] = useState('');
     const [imageurl, setImageurl] = useState('');
-    let history = useHistory();
+    const history = useHistory();
     const user = useSelector((state) => state.user.currentUser);
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8000/post/${match.params.id}`)
@@ -56,15 +58,19 @@ const PostDetail = ({ match }) => {
             setImageurl(response.data.picture);
         }
         fetchData()
+        if(user){
+            setFlag(true);
+        }
     }, [])
     const url = `http://localhost:8000/${imageurl.slice(7,)}`;
-    const deleteBlog = async () => {
-        await deletePost();
-        history.push('/')
-    }
-    const deletePost = async () => {
+    // const deleteBlog = async () => { 
+    //     await deletePost();
+    // }
+    const deleteBlog = async (e) => {
+        e.preventDefault()
         try {
-            return await axios.delete(`http://localhost:8000/post/${match.params.id}/delete`);
+            await axios.delete(`http://localhost:8000/post/${match.params.id}/delete`);    
+            history.push('/') 
         } catch (error) {
             console.log('Error while calling deletePost API ', error)
         }
@@ -73,12 +79,14 @@ const PostDetail = ({ match }) => {
 
         <Box className={classes.container}>
             <img src={url} alt="banner" className={classes.image} />
-            {   
+            {
+                flag?    
                 user.id === postdata.userId ?
                     <Box className={classes.icons}>
                         <Link to={`/updatepost/${postdata.id}`}><Edit className={classes.icon} color="primary" /></Link>
                         <Link><Delete onClick={deleteBlog} className={classes.icon} color="error" /></Link>
                     </Box> : null
+                  : null
             }
             <Typography className={classes.heading}>{postdata.title}</Typography>
             <Box className={classes.subheading}>

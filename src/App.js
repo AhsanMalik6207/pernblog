@@ -6,6 +6,7 @@ import Login from './components/Login'
 import CreatePost from './components/CreatePost'
 import UpdatePost from './components/UpdatePost'
 import PostDetail from './components/PostDetail'
+import CreateUserprofile from './components/CreateUserprofile'
 import { Box } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
@@ -18,6 +19,16 @@ function App() {
         <Navbar />
         <Box style={{ margintop: 64 }}>
           <Switch>
+          <Route
+              path="/createuserprofile"
+              render={props =>
+                user ? (
+                  <CreateUserprofile {...props} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
             <Route
               path="/createpost"
               render={props =>
