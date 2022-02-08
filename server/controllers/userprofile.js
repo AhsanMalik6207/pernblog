@@ -1,5 +1,4 @@
 const Userprofile = require("../models/userprofile");
-const jwt = require("jsonwebtoken")
 
 exports.getAll = async function (req, res) {
   try {
@@ -14,60 +13,70 @@ exports.getAll = async function (req, res) {
   }
 };
 
-exports.create = async function (req, res) {
-  try {
-    const picture = req.file.path;
-    const { gender, phonenumber, bio } = req.body;
-    const { userId } = req.params;
-    const userprofile = await Userprofile.findAll();
-    const checkuserprofile = userprofile.find(userprofile => userprofile.phonenumber === phonenumber)
-      if(checkuserprofile){
-        res.status(500).json({
-          message: "User profile already exists!",
-        });
-      }
-    const user = await Userprofile.create({
-      gender: gender,
-      phonenumber: phonenumber,
-      bio: bio,
-      picture: picture,
-      userId: userId
+exports.getUserprofile = async (request, response) => {
+  Userprofile.findOne({ where: { userId: request.params.id } }).then(user => {
+    if (user === null) {
+      response.status(401).json({
+        message: "Invalid credentials!",
+      });
+    } else {
+      response.status(200).json({
+        userprofile: user
+      });
+    }
+  }).catch(error => {
+    response.status(500).json({
+      message: "Something went wrong!",
     });
-    return res
-      .status(200)
-      .json({ status: 200, message: 'User-Profile Created Successfully',user});
-  } catch (e) {
-    return res.status(400).json({ status: 400, message: e.message });
-  }
-};
+  });
+}
 
-exports.update = async function (req, res) {
+exports.createorupdate = async function (req, res) {
   try {
-    const picture = req.file.path;
-    const { gender, phonenumber, bio} = req.body
-    return Userprofile
-      .findByPk(req.params.userprofileId)
-      .then((userprofile) => {
-        userprofile.update({
-          gender: gender || userprofile.gender,
-          phonenumber: phonenumber || userprofile.phonenumber,
-          bio: bio || userprofile.bio,
-          picture: picture || userprofile.picture
-        })
-          .then((updatedProfile) => {
-            res.status(200).send({
-              message: 'User profile updated successfully',
-              data: {
-                gender: gender || updatedProfile.gender,
-                phonenumber: phonenumber || updatedProfile.phonenumber,
-                bio: bio || updatedProfile.bio,
-                picture: picture || updatedProfile.picture
-              }
+    Userprofile.findOne({ where: { userId: req.params.id } }).then(user => {
+      if (user !== null) {
+        const userprofileId = user.id;
+        const picture = req.file.path
+        const { gender, phonenumber, bio } = req.body
+        return Userprofile
+          .findByPk(userprofileId)
+          .then((userprofile) => {
+            userprofile.update({
+              gender: gender || userprofile.gender,
+              phonenumber: phonenumber || userprofile.phonenumber,
+              bio: bio || userprofile.bio,
+              picture: picture || userprofile.picture
             })
+              .then((updatedUserprofile) => {
+                res.status(200).send({
+                  message: 'User-profile Updated Successfully',
+                  data: {
+                    gender: gender || updatedUserprofile.gender,
+                    phonenumber: phonenumber || updatedUserprofile.phonenumber,
+                    bio: bio || updatedUserprofile.bio,
+                    picture: picture || updatedUserprofile.picture
+                  }
+                })
+              })
+              .catch(error => res.status(400).send(error));
           })
           .catch(error => res.status(400).send(error));
-      })
-      .catch(error => res.status(400).send(error));
+      } else {
+        const userId = req.params.id;
+        const picture = req.file.path;
+        const { gender, phonenumber, bio } = req.body;
+        const users = Userprofile.create({
+          gender: gender,
+          phonenumber: phonenumber,
+          bio: bio,
+          picture: picture,
+          userId: userId
+        });
+        return res
+          .status(200)
+          .json({ status: 200, message: 'User-Profile Created Successfully', users });
+      }
+    })
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }

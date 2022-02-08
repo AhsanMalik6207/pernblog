@@ -1,5 +1,4 @@
 const Like = require("../models/like");
-const jwt = require("jsonwebtoken")
 exports.like = async function (req, res) {
   try {
     const { postId,userId} = req.params
