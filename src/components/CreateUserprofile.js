@@ -36,7 +36,7 @@ const CreateUserprofile = () => {
     const [imageurl, setImageurl] = useState('');
     const [profile, setProfile] = useState({});
     const [image, setImage] = useState('');
-    const { isFetching, error } = useSelector((state) => state.post);
+    const { isFetching, error } = useSelector((state) => state.userprofile);
     const imgbefore = `http://localhost:8000/${profile?.userprofile?.picture.slice(7,)}`
     const userid = user.id;
     const name = user.name;

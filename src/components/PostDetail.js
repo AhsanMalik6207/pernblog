@@ -3,6 +3,7 @@ import { Edit, Delete } from '@material-ui/icons'
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
+import Comments from './Comments'
 import axios from 'axios';
 const useStyle = makeStyles(theme => ({
     container: {
@@ -46,10 +47,10 @@ const PostDetail = ({ match }) => {
     const [postdata, setPostdata] = useState({});
     const [flag, setFlag] = useState(false);
     const [username, setUsername] = useState('');
+    const user = useSelector((state) => state.user.currentUser);
     const [imageurl, setImageurl] = useState('');
     const history = useHistory();
-    const user = useSelector((state) => state.user.currentUser);
-
+   
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8000/post/${match.params.id}`)
@@ -63,20 +64,21 @@ const PostDetail = ({ match }) => {
         }
     }, [])
     const url = `http://localhost:8000/${imageurl.slice(7,)}`;
-    // const deleteBlog = async () => { 
-    //     await deletePost();
-    // }
     const deleteBlog = async (e) => {
         e.preventDefault()
         try {
-            await axios.delete(`http://localhost:8000/post/${match.params.id}/delete`);    
+            await axios.delete(`http://localhost:8000/post/${match.params.id}/delete`,{
+                headers: {
+                    Authorization: "Bearer " + JSON.parse(localStorage.getItem('currentUser')).accesstoken
+                }
+            }
+            );   
             history.push('/') 
         } catch (error) {
             console.log('Error while calling deletePost API ', error)
         }
     }
     return (
-
         <Box className={classes.container}>
             <img src={url} alt="banner" className={classes.image} />
             {
@@ -94,6 +96,7 @@ const PostDetail = ({ match }) => {
                 <Typography style={{ marginLeft: 'auto' }}>{new Date(postdata.createdAt).toDateString()}</Typography>
             </Box>
             <Typography>{postdata.description}</Typography>
+            <Comments postdata={postdata}/>
         </Box>
     )
 }
