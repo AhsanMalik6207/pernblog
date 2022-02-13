@@ -129,12 +129,12 @@ const CreatePost = () => {
                             value={category}
                             onChange={handleMenu}
                         >
-                            <MenuItem value={5}>Music</MenuItem>
-                            <MenuItem value={6}>Movies</MenuItem>
-                            <MenuItem value={7}>Sports</MenuItem>
-                            <MenuItem value={8}>Tech</MenuItem>
-                            <MenuItem value={9}>Fashion</MenuItem>
-                            <MenuItem value={10}>News</MenuItem>
+                            <MenuItem value={1}>Music</MenuItem>
+                            <MenuItem value={2}>Movies</MenuItem>
+                            <MenuItem value={3}>Sports</MenuItem>
+                            <MenuItem value={4}>Tech</MenuItem>
+                            <MenuItem value={5}>Fashion</MenuItem>
+                            <MenuItem value={6}>News</MenuItem>
                         </Select>
                     </FormControl>
                 </div>

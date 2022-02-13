@@ -124,13 +124,13 @@ const CreateUserprofile = () => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.gender} name='gender' placeholder="Enter gender" onChange={(e) => handleChange(e)} variant="outlined" fullWidth required />
+                                <input defaultValue={profile?.userprofile?.gender} name='gender' placeholder="Enter gender" onChange={(e) => handleChange(e)} variant="outlined" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.phonenumber} name='phonenumber' type="number" onChange={(e) => handleChange(e)} placeholder="Enter phone number" variant="outlined" fullWidth required />
+                                <input defaultValue={profile?.userprofile?.phonenumber} name='phonenumber' type="number" onChange={(e) => handleChange(e)} placeholder="Enter phone number" variant="outlined" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.bio} name='bio' multiline rows={3} onChange={(e) => handleChange(e)} placeholder="Type your bio here" variant="outlined" fullWidth required />
+                                <input defaultValue={profile?.userprofile?.bio} name='bio' multiline rows={3} onChange={(e) => handleChange(e)} placeholder="Type your bio here" variant="outlined" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
                                 <Button onClick={saveUserprofile} disabled={isFetching} variant="contained" color="primary" fullWidth>Save Changes</Button>
