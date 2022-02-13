@@ -8,15 +8,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       description: {
-        allowNull: false,
-        type: Sequelize.STRING
+        allowNull: true,
+        type: Sequelize.TEXT('long')
       },
       picture: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       userId: {

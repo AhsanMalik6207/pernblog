@@ -5,7 +5,7 @@ const Comment = db.define(
   "Comment",
   {
     commenttext: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT('long'),
       allowNull: {
         args: false,
         msg: 'Pease enter a comment'

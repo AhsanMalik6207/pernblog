@@ -6,7 +6,7 @@ const User = db.define(
     name: {
       type: DataTypes.STRING,
       allowNull: {
-        args: false,
+        args: true,
         msg: 'Please enter your name'
       }
     },
@@ -26,13 +26,6 @@ const User = db.define(
           msg: 'Please enter a valid email address'
         },
       },
-    },
-    active: {
-      type: DataTypes.BOOLEAN,
-      allowNull: {
-        args: false,
-        msg: 'Please enter 0 for deactivating user or 1 for activating user'
-      }
     },
     password: {
       type: DataTypes.STRING,

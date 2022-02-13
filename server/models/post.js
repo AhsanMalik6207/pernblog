@@ -6,21 +6,21 @@ const Post = db.define(
     title: {
       type: DataTypes.STRING,
       allowNull: {
-        args: false,
+        args: true,
         msg: 'Please enter the title for your post'
       }
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT('long'),
       allowNull: {
-        args: false,
+        args: true,
         msg: 'Pease input a post description'
       }
     },
     picture: {
 			type: DataTypes.STRING,
 			allowNull: {
-				args: false,
+				args: true,
 				msg: 'Please upload post image'
 			}
 		},

@@ -12,9 +12,9 @@ const Permission = db.define(
 			}
 		},
 		permissiondescription: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT('long'),
 			allowNull: {
-			  args: false,
+			  args: true,
 			  msg: 'Please enter permission description'
 			}
 		}

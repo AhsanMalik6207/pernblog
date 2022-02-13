@@ -15,28 +15,28 @@ const Userprofile = db.define(
     gender: {
       type: DataTypes.STRING,
       allowNull: {
-        args: false,
+        args: true,
         msg: 'Pease enter a gender'
       }
     },
     phonenumber: {
       type: DataTypes.STRING,
       allowNull: {
-        args: false,
+        args: true,
         msg: 'Pease enter your phone number'
       }
     },
     bio: {
       type: DataTypes.STRING,
       allowNull: {
-        args: false,
+        args: true,
         msg: 'Pease enter your bio'
       }
     },
     picture: {
       type: DataTypes.STRING,
       allowNull: {
-        args: false,
+        args: true,
         msg: 'Pease upload profile picture'
       }
     }

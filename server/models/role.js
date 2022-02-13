@@ -12,9 +12,9 @@ const Role = db.define(
 			}
 		},
 		roledescription: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT('long'),
 			allowNull: {
-				args: false,
+				args: true,
 				msg: 'Please enter role description'
 			}
 		}

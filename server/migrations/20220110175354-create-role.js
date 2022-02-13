@@ -13,8 +13,8 @@ module.exports = {
 				type: Sequelize.STRING,
 			},
 			roledescription: {
-				allowNull: false,
-				type: Sequelize.STRING,
+				allowNull: true,
+				type: Sequelize.TEXT('long')
 			},
 			createdAt: {
 				allowNull: false,

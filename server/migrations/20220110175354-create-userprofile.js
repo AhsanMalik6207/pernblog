@@ -17,19 +17,19 @@ module.exports = {
 				}
 			},
       gender: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       phonenumber: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       bio: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       picture: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       createdAt: {

@@ -12,8 +12,8 @@ module.exports = {
 				type: Sequelize.STRING,
 			},
 			permissiondescription: {
-				allowNull: false,
-				type: Sequelize.STRING,
+				allowNull: true,
+				type: Sequelize.TEXT('long'),
 			},
 			createdAt: {
 				allowNull: false,
