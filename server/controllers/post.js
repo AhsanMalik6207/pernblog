@@ -10,16 +10,25 @@ exports.getPost = async (request, response) => {
     User.hasMany(Post, {
       foreignKey: 'userId',
     });
-      const post = await Post.findByPk(request.params.id,{
-        include: [{
-          model: User,
-          required: true,
-          attributes:['name']
-         }],
-      });
-      response.status(200).json(post);
+    const post = await Post.findByPk(request.params.id, {
+      include: [{
+        model: User,
+        required: true,
+        attributes: ['name']
+      }],
+    });
+    response.status(200).json(post);
   } catch (error) {
-      response.status(500).json(error)
+    response.status(500).json(error)
+  }
+}
+
+exports.getPostbyCategory = async function (request, response) {
+  try {
+    const postbycategory = await Post.findAll({ where: { categoryId: request.params.id } });
+    response.status(200).json(postbycategory);
+  } catch (error) {
+    response.status(500).json(error)
   }
 }
 
@@ -37,10 +46,10 @@ exports.getAll = async function (req, res) {
         include: [{
           model: User,
           required: true,
-          attributes:['name']
-         }],
+          attributes: ['name']
+        }],
       })
-      .then(posts =>  res.status(200).send(posts));
+      .then(posts => res.status(200).send(posts));
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
@@ -49,20 +58,20 @@ exports.getAll = async function (req, res) {
 exports.create = async function (req, res) {
   try {
     const picture = req.file.path;
-    const { title, description} = req.body
+    const { title, description } = req.body
     const { userId, categoryId } = req.params
-      return Post
-        .create({
-          title,
-          description,
-          picture,
-          userId,
-          categoryId
-        })
-        .then(post => res.status(201).send({
-          message: `Your post with the title ${title} has been created successfully `,
-          post
-        }))
+    return Post
+      .create({
+        title,
+        description,
+        picture,
+        userId,
+        categoryId
+      })
+      .then(post => res.status(201).send({
+        message: `Your post with the title ${title} has been created successfully `,
+        post
+      }))
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
@@ -70,7 +79,7 @@ exports.create = async function (req, res) {
 
 exports.update = async function (req, res) {
   try {
-    const picture=req.file.path
+    const picture = req.file.path
     const { title, description } = req.body
     return Post
       .findByPk(req.params.postId)
