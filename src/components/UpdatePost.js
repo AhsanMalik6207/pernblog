@@ -75,8 +75,6 @@ const UpdatePost = ({match}) => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8000/post/${match.params.id}`)
-            console.log(response.data.userId)
-            console.log(userid)
             setEditpost(response.data);
             if(response.data.userId!==userid){
                 history.push('/')

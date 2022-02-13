@@ -1,4 +1,6 @@
 import { makeStyles, Box, Typography } from '@material-ui/core';
+import { useState,useEffect} from 'react';
+import axios from 'axios';
 import Clamp from 'react-multiline-clamp';
 const useStyle = makeStyles({
     container: {
@@ -40,12 +42,20 @@ const useStyle = makeStyles({
 const Post = ({post}) => {
     const classes = useStyle();
     const url = `http://localhost:8000/${post.picture.slice(7,)}`;
+    const [username, setUsername] = useState('');
+    useEffect(() => {
+        const getData = async () => {
+            const response = await axios.get(`http://localhost:8000/user/${post.userId}`)
+            setUsername(response.data.name);
+        }
+        getData();
+    }, []);
     return (
         <Box className={classes.container}>
             <img src={url} alt="wrapper" className={classes.image} />
             <Typography className={classes.text}> {new Date(post.createdAt).toDateString()}</Typography>
             <Typography className={classes.heading}>{post.title}</Typography>
-            <Typography className={classes.text}><b>Author:</b> {post.User.name}</Typography>
+            <Typography className={classes.text}><b>Author:</b> {username}</Typography>
             <Clamp withTooltip lines={4} >
             <Typography className={classes.clamp}>{post.description}</Typography>
             </Clamp>

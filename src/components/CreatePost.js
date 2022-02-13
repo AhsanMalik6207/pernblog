@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, makeStyles, TextareaAutosize, Button, FormControl, InputBase } from '@material-ui/core';
+import { Box, makeStyles, TextareaAutosize,FormControl, InputBase,InputLabel,MenuItem,Select,Button } from '@material-ui/core';
 import { AddCircle as Add } from '@material-ui/icons';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -36,7 +36,15 @@ const useStyle = makeStyles(theme => ({
             outline: 'none'
         }
     },
-    spanstyle: { color: "red", marginTop: "10px" }
+    spanstyle: { color: "red", marginTop: "10px" },
+    button: {
+        display: 'block',
+        marginTop: theme.spacing(2),
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
 }));
 const initialPost = {
     title: '',
@@ -54,6 +62,19 @@ const CreatePost = () => {
     const { isFetching, error } = useSelector((state) => state.post);
     const url = imageurl ? imageurl : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
     const userid = user.id;
+    const [category, setCategory] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+
+    const handleMenu = (event) => {
+        setCategory(event.target.value);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
     useEffect(() => {
         const getImage = async () => {
             if (image) {
@@ -79,7 +100,7 @@ const CreatePost = () => {
             data.append("picture", image);
             data.append("title", postdata.title);
             data.append("description", postdata.description);
-            const result = await axios.post(`http://localhost:8000/post/${userid}/4/create`,
+            const result = await axios.post(`http://localhost:8000/post/${userid}/${category}/create`,
                 data, {
                 headers: {
                     Authorization: "Bearer " + JSON.parse(localStorage.getItem('currentUser')).accesstoken
@@ -96,6 +117,27 @@ const CreatePost = () => {
         <>
             <Box className={classes.container}>
                 <img src={url} alt="banner" className={classes.picture} />
+                <div>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="demo-controlled-open-select-label">Category</InputLabel>
+                        <Select
+                            labelId="demo-controlled-open-select-label"
+                            id="demo-controlled-open-select"
+                            open={open}
+                            onClose={handleClose}
+                            onOpen={handleOpen}
+                            value={category}
+                            onChange={handleMenu}
+                        >
+                            <MenuItem value={5}>Music</MenuItem>
+                            <MenuItem value={6}>Movies</MenuItem>
+                            <MenuItem value={7}>Sports</MenuItem>
+                            <MenuItem value={8}>Tech</MenuItem>
+                            <MenuItem value={9}>Fashion</MenuItem>
+                            <MenuItem value={10}>News</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
                 <FormControl className={classes.form}>
                     <label htmlFor="fileInput">
                         <Add className={classes.addIcon} fontSize="large" color="action" />
@@ -118,7 +160,7 @@ const CreatePost = () => {
                 />
                 {error && <Box component="span" className={classes.spanstyle}>Post not Created!</Box>}
             </Box>
-            
+
         </>
     )
 }
