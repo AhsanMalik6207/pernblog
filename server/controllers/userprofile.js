@@ -35,32 +35,32 @@ exports.createorupdate = async function (req, res) {
   try {
     Userprofile.findOne({ where: { userId: req.params.id } }).then(user => {
       if (user !== null) {
-        const userprofileId = user.id;
-        const picture = req.file.path
-        const { gender, phonenumber, bio } = req.body
-        return Userprofile
-          .findByPk(userprofileId)
-          .then((userprofile) => {
-            userprofile.update({
-              gender: gender || userprofile.gender,
-              phonenumber: phonenumber || userprofile.phonenumber,
-              bio: bio || userprofile.bio,
-              picture: picture || userprofile.picture
-            })
-              .then((updatedUserprofile) => {
-                res.status(200).send({
-                  message: 'User-profile Updated Successfully',
-                  data: {
-                    gender: gender || updatedUserprofile.gender,
-                    phonenumber: phonenumber || updatedUserprofile.phonenumber,
-                    bio: bio || updatedUserprofile.bio,
-                    picture: picture || updatedUserprofile.picture
-                  }
-                })
+          const userprofileId = user.id;
+          const picture = req.file.path
+          const { gender, phonenumber, bio } = req.body
+          return Userprofile
+            .findByPk(userprofileId)
+            .then((userprofile) => {
+              userprofile.update({
+                gender: gender || userprofile.gender,
+                phonenumber: phonenumber || userprofile.phonenumber,
+                bio: bio || userprofile.bio,
+                picture: picture || userprofile.picture
               })
-              .catch(error => res.status(400).send(error));
-          })
-          .catch(error => res.status(400).send(error));
+                .then((updatedUserprofile) => {
+                  res.status(200).send({
+                    message: 'User-profile Updated Successfully',
+                    data: {
+                      gender: gender || updatedUserprofile.gender,
+                      phonenumber: phonenumber || updatedUserprofile.phonenumber,
+                      bio: bio || updatedUserprofile.bio,
+                      picture: picture || updatedUserprofile.picture
+                    }
+                  })
+                })
+                .catch(error => res.status(400).send(error));
+            })
+            .catch(error => res.status(400).send(error));
       } else {
         const userId = req.params.id;
         const picture = req.file.path;

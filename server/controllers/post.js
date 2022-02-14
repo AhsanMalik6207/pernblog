@@ -79,29 +79,29 @@ exports.create = async function (req, res) {
 
 exports.update = async function (req, res) {
   try {
-    const picture = req.file.path
-    const { title, description } = req.body
-    return Post
-      .findByPk(req.params.postId)
-      .then((post) => {
-        post.update({
-          title: title || post.title,
-          description: description || post.description,
-          picture: picture || post.picture,
-        })
-          .then((updatedPost) => {
-            res.status(200).send({
-              message: 'Post updated successfully',
-              data: {
-                title: title || updatedPost.title,
-                description: description || updatedPost.description,
-                picture: picture || updatedPost.picture,
-              }
-            })
+      const picture = req.file.path
+      const { title, description } = req.body
+      return Post
+        .findByPk(req.params.postId)
+        .then((post) => {
+          post.update({
+            title: title || post.title,
+            description: description || post.description,
+            picture: picture || post.picture,
           })
-          .catch(error => res.status(400).send(error));
-      })
-      .catch(error => res.status(400).send(error));
+            .then((updatedPost) => {
+              res.status(200).send({
+                message: 'Post updated successfully',
+                data: {
+                  title: title || updatedPost.title,
+                  description: description || updatedPost.description,
+                  picture: picture || updatedPost.picture,
+                }
+              })
+            })
+            .catch(error => res.status(400).send(error));
+        })
+        .catch(error => res.status(400).send(error));
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
