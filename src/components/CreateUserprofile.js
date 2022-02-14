@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Box, Button, Card, CardContent, Typography, makeStyles } from '@material-ui/core';
+import { Grid, Button, Card, CardContent, Typography, makeStyles } from '@material-ui/core';
 import { AddCircle as Add } from '@material-ui/icons';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import { useHistory } from 'react-router-dom'
 import { userprofileFailure, userprofileStart, userprofileSuccess } from "../redux/userprofileRedux";
 const useStyle = makeStyles(theme => ({
@@ -20,7 +22,7 @@ const useStyle = makeStyles(theme => ({
         borderRadius: "80px"
     },
     spanstyle: { color: "red", marginTop: "10px" },
-    addIcon: { marginLeft:65 },
+    addIcon: { marginLeft: 65 },
 }));
 const initialPost = {
     gender: '',
@@ -81,7 +83,6 @@ const CreateUserprofile = () => {
                 }
             }
             );
-            console.log(result)
             dispatch(userprofileSuccess(result.data));
             alert('User Profile Saved Successfully');
             // history.push('/')
@@ -101,10 +102,10 @@ const CreateUserprofile = () => {
                             {name}
                         </Typography>
                         <div>
-                        <img src={imageurl ? imageurl : imgbefore} alt="No Profile Picture" className={classes.picture} />
-                        <label htmlFor="fileInput">
-                            <Add className={classes.addIcon} fontSize="large" color="action" />
-                        </label>
+                            <img src={imageurl ? imageurl : imgbefore} alt="No Profile Picture" className={classes.picture} />
+                            <label htmlFor="fileInput">
+                                <Add className={classes.addIcon} fontSize="large" color="action" />
+                            </label>
                         </div>
                         <Grid container spacing={1}>
                             <Grid xs={12} sm={6} item>
@@ -124,18 +125,22 @@ const CreateUserprofile = () => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.gender} name='gender' placeholder="Enter gender" onChange={(e) => handleChange(e)} variant="outlined" fullWidth/>
+                                <input defaultValue={profile?.userprofile?.gender} name='gender' placeholder="Enter gender" onChange={(e) => handleChange(e)} variant="outlined" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.phonenumber} name='phonenumber' type="number" onChange={(e) => handleChange(e)} placeholder="Enter phone number" variant="outlined" fullWidth/>
+                                <input defaultValue={profile?.userprofile?.phonenumber} name='phonenumber' type="number" onChange={(e) => handleChange(e)} placeholder="Enter phone number" variant="outlined" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.bio} name='bio' multiline rows={3} onChange={(e) => handleChange(e)} placeholder="Type your bio here" variant="outlined" fullWidth/>
+                                <input defaultValue={profile?.userprofile?.bio} name='bio' multiline rows={3} onChange={(e) => handleChange(e)} placeholder="Type your bio here" variant="outlined" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
                                 <Button onClick={saveUserprofile} disabled={isFetching} variant="contained" color="primary" fullWidth>Save Changes</Button>
                             </Grid>
-                            {error && <Box component="span" className={classes.spanstyle}>Userprofile not Saved!</Box>}
+                            {error && <Alert severity="error">
+                                <AlertTitle>Profile not Saved</AlertTitle>
+                                Please Choose Profile Picture to Save Changes!
+                            </Alert>
+                            }
                         </Grid>
                     </CardContent>
                 </Card>

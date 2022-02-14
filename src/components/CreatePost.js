@@ -3,6 +3,8 @@ import { Box, makeStyles, TextareaAutosize, FormControl, InputBase, InputLabel, 
 import { AddCircle as Add } from '@material-ui/icons';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import { useHistory } from 'react-router-dom'
 import { postFailure, postStart, postSuccess } from "../redux/postRedux";
 const useStyle = makeStyles(theme => ({
@@ -36,7 +38,6 @@ const useStyle = makeStyles(theme => ({
             outline: 'none'
         }
     },
-    spanstyle: { color: "red", marginTop: "10px" },
     button: {
         display: 'block',
         marginTop: theme.spacing(2),
@@ -158,7 +159,11 @@ const CreatePost = () => {
                     className={classes.textarea}
                     onChange={(e) => handleChange(e)}
                 />
-                {error && <Box component="span" className={classes.spanstyle}>Post not Created!</Box>}
+                {error && <Alert severity="error">
+                    <AlertTitle>Post not Created</AlertTitle>
+                    Select a Category and Choose Image to Post!
+                </Alert>
+                }
             </Box>
 
         </>

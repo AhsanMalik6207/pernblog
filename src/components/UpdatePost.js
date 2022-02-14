@@ -3,7 +3,9 @@ import { Box, makeStyles, TextareaAutosize, Button, FormControl } from '@materia
 import { AddCircle as Add } from '@material-ui/icons';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import { postFailure, postStart, postSuccess } from "../redux/postRedux";
 const useStyle = makeStyles(theme => ({
     container: {
@@ -85,12 +87,12 @@ const UpdatePost = ({ match }) => {
     }, [])
 
     const savePost = async () => {
-        await createPost(dispatch, postdata);
+        await updatePost(dispatch, postdata);
     }
     const handleChange = (e) => {
         setPostdata({ ...postdata, [e.target.name]: e.target.value });
     }
-    const createPost = async (dispatch, post) => {
+    const updatePost = async (dispatch, post) => {
         dispatch(postStart());
         try {
             const data = new FormData();
@@ -105,7 +107,6 @@ const UpdatePost = ({ match }) => {
             }
             );
             dispatch(postSuccess(result.data));
-            alert('Post updated Successfully!')
             history.push('/')
         } catch (err) {
             dispatch(postFailure());
@@ -137,9 +138,12 @@ const UpdatePost = ({ match }) => {
                     className={classes.textarea}
                     onChange={(e) => handleChange(e)}
                 />
-                {error && <Box component="span" className={classes.spanstyle}>Post not Updated!</Box>}
+                {error && <Alert severity="error">
+                    <AlertTitle>Post not Updated</AlertTitle>
+                    Choose Image to Update a Post!
+                </Alert>
+                }
             </Box>
-
         </>
     )
 }
