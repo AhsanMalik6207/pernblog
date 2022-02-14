@@ -54,7 +54,7 @@ const Login = () => {
                 <TextField label='Email' placeholder='Enter email' type='email' onChange={(e) => setEmail(e.target.value)} fullWidth required />
                 <TextField label='Password' placeholder='Enter password' type='password' onChange={(e) => setPassword(e.target.value)} fullWidth required />
                 <Button  color='primary' onClick={handleSubmit} disabled={isFetching} variant="contained" className={classes.btnstyle} fullWidth>Sign in</Button>
-                {error && <Box component="span" className={classes.spanstyle}>Something went wrong!</Box>}
+                {error && <Box component="span" className={classes.spanstyle}>Email or Password is Incorrect!</Box>}
                 <Typography > Do you have an account?
                     <Link to="/register">
                         Register

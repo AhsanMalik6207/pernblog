@@ -4,6 +4,7 @@ import axios from 'axios';
 import Comment from './Comment';
 import { useSelector, useDispatch } from 'react-redux';
 import { commentFailure, commentStart, commentSuccess } from "../redux/commentRedux";
+
 const useStyles = makeStyles({
     container: {
         marginTop: 100,
@@ -77,7 +78,7 @@ const Comments = ({ postdata }) => {
                     name='commenttext'
                     className={classes.textarea}
                     rowsMin={5}
-                    placeholder="what's on your mind?"
+                    placeholder="write you comment here?"
                     onChange={(e) => handleChange(e)}
                     value={data}
                 />

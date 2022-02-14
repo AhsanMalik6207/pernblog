@@ -9,6 +9,7 @@ const useStyle = makeStyles({
         border: '1px solid #00d5ff',
         marginRight: '10px',
         marginBottom: '10px',
+        marginTop:'5px',
         padding: '8px',
         borderRadius: '10px',
         backgroundColor: '#2B547E',

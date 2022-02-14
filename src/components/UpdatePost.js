@@ -47,7 +47,7 @@ const initialPost = {
     description: '',
     picture: '',
 }
-const UpdatePost = ({match}) => {
+const UpdatePost = ({ match }) => {
     const classes = useStyle();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -76,7 +76,7 @@ const UpdatePost = ({match}) => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8000/post/${match.params.id}`)
             setEditpost(response.data);
-            if(response.data.userId!==userid){
+            if (response.data.userId !== userid) {
                 history.push('/')
             }
             setImageurl(response.data.picture);
@@ -111,7 +111,7 @@ const UpdatePost = ({match}) => {
             dispatch(postFailure());
         }
     };
-    const url = imageurlafter ? imageurlafter :   `http://localhost:8000/${imageurl.slice(7,)}`
+    const url = imageurlafter ? imageurlafter : `http://localhost:8000/${imageurl.slice(7,)}`
     return (
         <>
             <Box className={classes.container}>
@@ -139,7 +139,7 @@ const UpdatePost = ({match}) => {
                 />
                 {error && <Box component="span" className={classes.spanstyle}>Post not Updated!</Box>}
             </Box>
-            
+
         </>
     )
 }
