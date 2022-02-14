@@ -1,5 +1,4 @@
 const Like = require("../models/like");
-
 exports.like = async function (req, res) {
   try {
     const { postId,userId} = req.params
