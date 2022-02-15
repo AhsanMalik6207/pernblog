@@ -2,8 +2,14 @@ import { useState, useEffect } from 'react';
 import { Box, TextareaAutosize, Button, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import Comment from './Comment';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { useSelector, useDispatch } from 'react-redux';
+import Checkbox from '@material-ui/core/Checkbox';
 import { commentFailure, commentStart, commentSuccess } from "../redux/commentRedux";
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+
 const useStyles = makeStyles({
     container: {
         marginTop: 100,
@@ -25,7 +31,10 @@ const useStyles = makeStyles({
     button: {
         height: 40
     },
-    spanstyle: { color: "red", marginTop: "10px" }
+    spanstyle: { color: "red", marginTop: "10px" },
+    fav: {
+        color: '#0000FF',
+    }
 })
 const Comments = ({ postdata }) => {
     const classes = useStyles();
@@ -33,17 +42,51 @@ const Comments = ({ postdata }) => {
     const dispatch = useDispatch();
     const url = 'https://static.thenounproject.com/png/12017-200.png'
     const [commenttext, setComment] = useState("");
+    const [likes, setLikes] = useState('');
     const [comments, setComments] = useState([]);
+    const [likedata, setLikedata] = useState();
+    const [likeusers, setLikeusers] = useState("");
+    const [liked, setLiked] = useState(0);
     const [data, setData] = useState();
     const [toggle, setToggle] = useState(false);
     const { isFetching, error } = useSelector((state) => state.comment);
+    const CustomWidthTooltip = styled(({ className, ...props }) => (
+        <Tooltip {...props} classes={{ popper: className }} />
+    ))({
+        [`& .${tooltipClasses.tooltip}`]: {
+            maxWidth: 500,
+        },
+    });
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get(`http://localhost:8000/comment/${postdata.id}`)
             setComments(response.data);
         }
         getData();
-    }, [toggle, postdata]);
+        const getlikeData = async () => {
+            const response = await axios.get(`http://localhost:8000/like/${postdata.id}`)
+            const object = {}
+            let i=0
+            while (i < response.data.length) {
+                const str = response.data[i].userId;
+                const responsed = await axios.get(`http://localhost:8000/user/${str}`)
+                object[`ptr` + i] = responsed.data.name
+                i++
+            }
+            let likeusers=Object.values(object)
+            setLikeusers(likeusers.toString());
+            var size = Object.keys(response.data).length;
+            setLikes(size);
+        }
+        getlikeData();
+        const checkUserlike = async () => {
+            const response = await axios.get(`http://localhost:8000/like/${user.id}/${postdata.id}`)
+            if (response.data.length > 0) {
+                setLiked(response.data.length)
+            }
+        }
+        checkUserlike();
+    }, [toggle, postdata, likedata]);
     const saveComment = async (e) => {
         e.preventDefault();
         await createComment(dispatch, { commenttext });
@@ -51,6 +94,12 @@ const Comments = ({ postdata }) => {
     const handleChange = (e) => {
         setComment(e.target.value);
         setData(e.target.value);
+    }
+    const likeunlikepost = async () => {
+        const response = await axios.post(`http://localhost:8000/like/${user.id}/${postdata.id}`);
+        if (response.data) {
+            setLikedata(response.data)
+        }
     }
     const createComment = async (dispatch, comment) => {
         dispatch(commentStart());
@@ -69,9 +118,17 @@ const Comments = ({ postdata }) => {
         setData('')
         setToggle(prev => !prev);
     };
+
     return (
-        <Box >
-            <Box className={classes.container}>
+        <Box>
+            <Box className={classes.container}>    
+                <CustomWidthTooltip title={likeusers}>
+                    <Button sx={{ m: 1 }}> <Box component="h6">{likes} People likes this</Box></Button>
+                </CustomWidthTooltip>
+                <Checkbox label="like" onChange={likeunlikepost}
+                    icon={liked === 0 ? <ThumbUpOutlinedIcon className={classes.fav} /> : <ThumbUpIcon className={classes.fav} />}
+                    checkedIcon={liked === 0 ? <ThumbUpIcon className={classes.fav} /> : <ThumbUpOutlinedIcon className={classes.fav} />}
+                />
                 <img src={url} className={classes.image} alt="dp" />
                 <TextareaAutosize
                     name='commenttext'
@@ -101,5 +158,4 @@ const Comments = ({ postdata }) => {
         </Box>
     )
 }
-
 export default Comments;

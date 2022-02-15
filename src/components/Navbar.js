@@ -45,7 +45,7 @@ const Navbar = () => {
                 <Link to='/about' className={classes.link}>
                     <Typography>ABOUT</Typography>
                 </Link>
-                {user ?
+                {user?
                     <>
                         <Link onClick={logout} to='/login' className={classes.link}>
                             <Typography>SIGN OUT</Typography>
