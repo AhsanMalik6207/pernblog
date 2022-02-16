@@ -125,10 +125,13 @@ const Comments = ({ postdata }) => {
                 <CustomWidthTooltip title={likeusers}>
                     <Button sx={{ m: 1 }}> <Box component="h6">{likes} People likes this</Box></Button>
                 </CustomWidthTooltip>
-                <Checkbox label="like" onChange={likeunlikepost}
+                {
+                    user?
+                    <Checkbox label="like" onChange={likeunlikepost}
                     icon={liked === 0 ? <ThumbUpOutlinedIcon className={classes.fav} /> : <ThumbUpIcon className={classes.fav} />}
                     checkedIcon={liked === 0 ? <ThumbUpIcon className={classes.fav} /> : <ThumbUpOutlinedIcon className={classes.fav} />}
-                />
+                    />:null
+                }
                 <img src={url} className={classes.image} alt="dp" />
                 <TextareaAutosize
                     name='commenttext'
