@@ -11,7 +11,7 @@ const commentlikeRoutes = require('./commentlike')
 const permissionRoutes = require('./permission');
 const roleRoutes = require('./role');
 const rolehaspermissionRoutes = require('./rolehaspermission');
-//index.js
+
 router.use("/user", userRoutes);
 router.use("/userprofile", userprofileRoutes);
 router.use("/category", categoryRoutes);
