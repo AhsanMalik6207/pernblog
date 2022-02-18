@@ -136,12 +136,12 @@ const CreateUserprofile = () => {
                             <Grid item xs={12}>
                                 <Button onClick={saveUserprofile} disabled={isFetching} variant="contained" color="primary" fullWidth>Save Changes</Button>
                             </Grid>
-                            {error && <Alert severity="error">
+                        </Grid>
+                        {error && <Alert severity="error">
                                 <AlertTitle>Profile not Saved</AlertTitle>
                                 Please Choose Profile Picture to Save Changes!
                             </Alert>
                             }
-                        </Grid>
                     </CardContent>
                 </Card>
             </Grid>
