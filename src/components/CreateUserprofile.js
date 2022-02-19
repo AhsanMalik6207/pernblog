@@ -24,41 +24,39 @@ const useStyle = makeStyles(theme => ({
     spanstyle: { color: "red", marginTop: "10px" },
     addIcon: { marginLeft: 65 },
 }));
-const initialPost = {
+const initialUserprofile = {
     gender: '',
     phonenumber: '',
     bio: '',
+    picture:'',
 }
 const CreateUserprofile = () => {
     const classes = useStyle();
     const dispatch = useDispatch();
-    const history = useHistory();
     const user = useSelector((state) => state.user.currentUser);
-    const [userprofiledata, setUserprofiledata] = useState(initialPost);
+    const [userprofiledata, setUserprofiledata] = useState(initialUserprofile);
     const [imageurl, setImageurl] = useState('');
-    const [profile, setProfile] = useState({});
-    const [image, setImage] = useState('');
     const { isFetching, error } = useSelector((state) => state.userprofile);
-    const imgbefore = `http://localhost:8000/${profile?.userprofile?.picture.slice(7,)}`
+    const imgbefore = `http://localhost:8000/${userprofiledata.picture.slice(7,)}`
     const userid = user.id;
     const name = user.name;
     const email = user.email;
     useEffect(() => {
         const getImage = async () => {
-            if (image) {
+            if (userprofiledata.picture) {
                 var reader = new FileReader();
                 reader.onloadend = function () {
                     setImageurl(reader.result)
                 }
-                reader.readAsDataURL(image);
+                reader.readAsDataURL(userprofiledata.picture);
             }
         }
         getImage();
-    }, [image])
+    }, [userprofiledata.picture])
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8000/userprofile/${userid}`)
-            setProfile(response.data);
+            setUserprofiledata({gender: response.data.userprofile.gender,phonenumber: response.data.userprofile.phonenumber, bio: response.data.userprofile.bio,picture:response.data.userprofile.picture})
         }
         fetchData()
     }, [])
@@ -66,13 +64,13 @@ const CreateUserprofile = () => {
         await createUserprofile(dispatch, userprofiledata);
     }
     const handleChange = (e) => {
-        setUserprofiledata({ ...userprofiledata, [e.target.name]: e.target.value });
+        setUserprofiledata({ ...userprofiledata, [e.target.name]: e.target.type==="file"? e.target.files[0]:e.target.value });
     }
     const createUserprofile = async (dispatch, userprofile) => {
         dispatch(userprofileStart());
         try {
             const data = new FormData();
-            data.append("picture", image);
+            data.append("picture", userprofiledata.picture);
             data.append("gender", userprofiledata.gender);
             data.append("phonenumber", userprofiledata.phonenumber);
             data.append("bio", userprofiledata.bio);
@@ -85,7 +83,6 @@ const CreateUserprofile = () => {
             );
             dispatch(userprofileSuccess(result.data));
             alert('User Profile Saved Successfully');
-            // history.push('/')
         } catch (err) {
             dispatch(userprofileFailure());
         }
@@ -118,20 +115,21 @@ const CreateUserprofile = () => {
                         <Grid container spacing={1}>
                             <Grid xs={12} sm={6} item>
                                 <input
+                                    name='picture'
                                     type="file"
                                     id="fileInput"
                                     style={{ display: "none" }}
-                                    onChange={(e) => setImage(e.target.files[0])}
+                                    onChange={(e) => handleChange(e)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.gender} name='gender' placeholder="Enter gender" onChange={(e) => handleChange(e)} variant="outlined" fullWidth />
+                                <input defaultValue={userprofiledata.gender} name='gender' placeholder="Enter gender" onChange={(e) => handleChange(e)} variant="outlined" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.phonenumber} name='phonenumber' type="number" onChange={(e) => handleChange(e)} placeholder="Enter phone number" variant="outlined" fullWidth />
+                                <input defaultValue={userprofiledata.phonenumber} name='phonenumber' type="number" onChange={(e) => handleChange(e)} placeholder="Enter phone number" variant="outlined" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
-                                <input defaultValue={profile?.userprofile?.bio} name='bio' multiline rows={3} onChange={(e) => handleChange(e)} placeholder="Type your bio here" variant="outlined" fullWidth />
+                                <input defaultValue={userprofiledata.bio} name='bio' multiline rows={3} onChange={(e) => handleChange(e)} placeholder="Type your bio here" variant="outlined" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
                                 <Button onClick={saveUserprofile} disabled={isFetching} variant="contained" color="primary" fullWidth>Save Changes</Button>
@@ -139,7 +137,7 @@ const CreateUserprofile = () => {
                         </Grid>
                         {error && <Alert severity="error">
                                 <AlertTitle>Profile not Saved</AlertTitle>
-                                Please Choose Profile Picture to Save Changes!
+                                Something went Wrong!
                             </Alert>
                             }
                     </CardContent>

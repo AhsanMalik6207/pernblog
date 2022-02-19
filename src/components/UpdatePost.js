@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, makeStyles, TextareaAutosize, Button, FormControl } from '@material-ui/core';
-import { AddCircle as Add } from '@material-ui/icons';
+import { AddCircle as Add, ContactSupportOutlined, InsertInvitationOutlined } from '@material-ui/icons';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -54,30 +54,28 @@ const UpdatePost = ({ match }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector((state) => state.user.currentUser);
-    const [editpost, setEditpost] = useState({});
     const [postdata, setPostdata] = useState(initialPost);
     const [imageurl, setImageurl] = useState('');
     const [imageurlafter, setImageurlafter] = useState('');
-    const [image, setImage] = useState('');
     const { isFetching, error } = useSelector((state) => state.post);
     const userid = user.id;
     useEffect(() => {
         const getImage = async () => {
-            if (image) {
+            if (postdata.picture) {
                 var reader = new FileReader();
                 reader.onloadend = function () {
                     setImageurlafter(reader.result)
                 }
-                reader.readAsDataURL(image);
+                reader.readAsDataURL(postdata.picture);
             }
         }
         getImage();
-    }, [image])
+    }, [postdata.picture])
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8000/post/${match.params.id}`)
-            setEditpost(response.data);
+            setPostdata({title: response.data.title,description: response.data.description,picture:response.data.picture})
             if (response.data.userId !== userid) {
                 history.push('/')
             }
@@ -90,13 +88,13 @@ const UpdatePost = ({ match }) => {
         await updatePost(dispatch, postdata);
     }
     const handleChange = (e) => {
-        setPostdata({ ...postdata, [e.target.name]: e.target.value });
+        setPostdata({ ...postdata, [e.target.name]: e.target.type==="file"? e.target.files[0]:e.target.value });
     }
     const updatePost = async (dispatch, post) => {
         dispatch(postStart());
         try {
             const data = new FormData();
-            data.append("picture", image);
+            data.append("picture", postdata.picture);
             data.append("title", postdata.title);
             data.append("description", postdata.description);
             const result = await axios.put(`http://localhost:8000/post/${match.params.id}/update`,
@@ -122,19 +120,20 @@ const UpdatePost = ({ match }) => {
                         <Add className={classes.addIcon} fontSize="large" color="action" />
                     </label>
                     <input
+                        name='picture'
                         type="file"
                         id="fileInput"
                         style={{ display: "none" }}
-                        onChange={(e) => setImage(e.target.files[0])}
+                        onChange={(e) => handleChange(e)}
                     />
-                    <input name='title' defaultValue={editpost.title} placeholder="Title" onChange={(e) => handleChange(e)} className={classes.textfield} />
+                    <input name='title' defaultValue={postdata.title} placeholder="Title" onChange={(e) => handleChange(e)} className={classes.textfield} />
                     <Button onClick={() => savePost()} disabled={isFetching} variant="contained" color="primary">Publish</Button>
                 </FormControl>
                 <TextareaAutosize
                     rowsMin={5}
                     name='description'
                     placeholder="Tell your story..."
-                    defaultValue={editpost.description}
+                    defaultValue={postdata.description}
                     className={classes.textarea}
                     onChange={(e) => handleChange(e)}
                 />
