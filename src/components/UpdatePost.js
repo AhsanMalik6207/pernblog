@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, makeStyles, TextareaAutosize, Button, FormControl } from '@material-ui/core';
-import { AddCircle as Add, ContactSupportOutlined, InsertInvitationOutlined } from '@material-ui/icons';
+import { AddCircle as Add } from '@material-ui/icons';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -107,6 +107,7 @@ const UpdatePost = ({ match }) => {
             dispatch(postSuccess(result.data));
             history.push('/')
         } catch (err) {
+            alert('Post not Updated, Something went Wrong!')
             dispatch(postFailure());
         }
     };
@@ -139,7 +140,7 @@ const UpdatePost = ({ match }) => {
                 />
                 {error && <Alert severity="error">
                     <AlertTitle>Post not Updated</AlertTitle>
-                    Choose Image to Update a Post!
+                    Something went Wrong!
                 </Alert>
                 }
             </Box>

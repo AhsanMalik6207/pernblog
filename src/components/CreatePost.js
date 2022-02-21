@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, makeStyles, TextareaAutosize, FormControl, InputBase, InputLabel, MenuItem, Select, Button } from '@material-ui/core';
+import { Box, makeStyles, TextareaAutosize, FormControl, Typography,InputBase, InputLabel, MenuItem, Select, Button } from '@material-ui/core';
 import { AddCircle as Add } from '@material-ui/icons';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -46,6 +46,9 @@ const useStyle = makeStyles(theme => ({
         margin: theme.spacing(1),
         minWidth: 120,
     },
+    addIcon:{
+         marginLeft:30
+    }
 }));
 const initialPost = {
     title: '',
@@ -111,6 +114,7 @@ const CreatePost = () => {
             dispatch(postSuccess(result.data));
             history.push('/')
         } catch (err) {
+            alert('Post not Created, Select a Category and Choose Image to Post!')
             dispatch(postFailure());
         }
     };
@@ -141,16 +145,19 @@ const CreatePost = () => {
                 </div>
                 <FormControl className={classes.form}>
                     <label htmlFor="fileInput">
-                        <Add className={classes.addIcon} fontSize="large" color="action" />
+                    <Typography>Choose Image</Typography>
+                    <Add className={classes.addIcon} fontSize="large" color="action" />
                     </label>
+                    <Box>
                     <input
                         type="file"
                         id="fileInput"
                         style={{ display: "none" }}
                         onChange={(e) => setImage(e.target.files[0])}
                     />
+                    </Box>
                     <InputBase name='title' placeholder="Title" onChange={(e) => handleChange(e)} className={classes.textfield} />
-                    <Button onClick={() => savePost()} disabled={isFetching} variant="contained" color="primary">Publish</Button>
+                    <Button className={classes.button} onClick={() => savePost()} disabled={isFetching} variant="contained" color="primary">Publish</Button>
                 </FormControl>
                 <TextareaAutosize
                     rowsMin={5}
@@ -159,7 +166,8 @@ const CreatePost = () => {
                     className={classes.textarea}
                     onChange={(e) => handleChange(e)}
                 />
-                {error && <Alert severity="error">
+                {error && 
+                <Alert severity="error">
                     <AlertTitle>Post not Created</AlertTitle>
                     Select a Category and Choose Image to Post!
                 </Alert>

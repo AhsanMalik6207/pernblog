@@ -96,7 +96,10 @@ const Comments = ({ postdata }) => {
         setData(e.target.value);
     }
     const likeunlikepost = async () => {
-        const response = await axios.post(`http://localhost:8000/like/${user.id}/${postdata.id}`);
+        const response = await axios.post(`http://localhost:8000/like/${user.id}/${postdata.id}`,{
+        headers: {
+            Authorization: "Bearer " + JSON.parse(localStorage.getItem('currentUser')).accesstoken
+        }});
         if (response.data) {
             setLikedata(response.data)
         }

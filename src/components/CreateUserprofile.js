@@ -82,8 +82,9 @@ const CreateUserprofile = () => {
             }
             );
             dispatch(userprofileSuccess(result.data));
-            alert('User Profile Saved Successfully');
+            alert('User Profile Saved Successfully!');
         } catch (err) {
+            alert('Profile not Saved, Something went Wrong!')
             dispatch(userprofileFailure());
         }
     };

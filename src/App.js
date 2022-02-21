@@ -10,7 +10,7 @@ import CreateUserprofile from './components/CreateUserprofile'
 import { Box } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-//app.js
+
 function App() {
   const user = useSelector((state) => state.user.currentUser);
   return (
