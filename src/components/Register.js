@@ -59,7 +59,7 @@ const Register = () => {
                     <TextField label='Password' placeholder="Enter your password" type='password' onChange={(e) => setPassword(e.target.value)} fullWidth required />
                     <Button type='submit' color='primary' variant="contained" className={classes.btnstyle} fullWidth>Sign up</Button>
                 </form>
-               {error &&  <Box component="span" className={classes.spanstyle}>Something went wrong!</Box>}
+               {error &&  <Box component="span" className={classes.spanstyle}>Something went wrong! Make sure Password should be atleat 8 characters long.</Box>}
             </Paper>
         </Grid>
     )
