@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const useStyle = makeStyles(theme => ({
-    logo: {
-        flexGrow: "1",
-        cursor: "pointer",
-    },
     component: {
         background: '#FFFFFF',
         color: 'black'
@@ -36,9 +32,6 @@ const Navbar = () => {
     return (
         <AppBar className={classes.component}>
             <Toolbar className={classes.container}>
-                <Typography variant="h5" className={classes.logo}>
-                    Blog App
-                </Typography>
                 <Link to='/' className={classes.link}>
                     <Typography>BLOG</Typography>
                 </Link>

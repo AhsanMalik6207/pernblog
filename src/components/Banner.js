@@ -3,7 +3,7 @@ import { makeStyles, Box, Typography } from '@material-ui/core';
 const useStyle = makeStyles({
     image: {
         width: '100%',
-        background: `url(${'https://img.freepik.com/free-photo/gradient-dark-blue-futuristic-digital-grid-background_53876-129728.jpg?w=826'}) center/100% repeat-x #000`,
+        background: `url(${'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg'}) center/55% repeat-x #000`,
         height: '50vh',
         display: 'flex',
         flexDirection: 'column',
