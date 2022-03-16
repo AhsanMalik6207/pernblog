@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 app.use(bodyParser.json());
 app.use("/", routes);
 app.use(express.static('./images'));
-
+//app.js
 const server = app.listen(8000, "localhost", function () {
   console.log(`Blog App listening at http://localhost:${8000}`);
   
