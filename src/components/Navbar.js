@@ -33,7 +33,7 @@ const Navbar = () => {
         <AppBar className={classes.component}>
             <Toolbar className={classes.container}>
                 <Link to='/' className={classes.link}>
-                    <Typography>BLOG</Typography>
+                    <Typography>HOME</Typography>
                 </Link>
                 <Link to='/about' className={classes.link}>
                     <Typography>ABOUT</Typography>
