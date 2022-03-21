@@ -5,24 +5,40 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import { userprofileFailure, userprofileStart, userprofileSuccess } from "../redux/userprofileRedux";
 const useStyle = makeStyles(theme => ({
+    Userprofile:{
+        fontFamily:"Quicksand"
+    },
     container: {
         margin: '100px 110px',
         [theme.breakpoints.down('md')]: {
             marginTop: 110,
         },
     },
+    text1:{
+        borderBottom: "2px solid #dbd7d7",
+        width: '30%',
+    },
+    paddingadd:{
+        padding: '10px 20px',
+        borderBottom:"1px solid gray",
+        border:"none",
+        backgroundColor:"#f0f0f0"
+    },
     picture: {
         textAlign: 'center',
+        margin:"auto",
         display: 'block',
         width: "160px",
         height: "160px",
-        borderRadius: "80px"
+        borderRadius: "80px",
+        boxShadow: 'rgb(0 0 1 / 30%) 0px 5px 10px',
+        border: '4px solid #e6c8c5',
     },
     spanstyle: { color: "red", marginTop: "10px" },
-    addIcon: { marginLeft: 65 },
+    addIcon: { marginLeft: 190 },
 }));
 const initialUserprofile = {
     gender: '',
@@ -91,13 +107,10 @@ const CreateUserprofile = () => {
     return (
         <div className="Userprofile">
             <Grid className={classes.container}>
-                <Card style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
+                <Card style={{ maxWidth: 450, padding: "25px 5px", margin: "0 auto", boxShadow: "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px"}}>
                     <CardContent>
-                        <Typography gutterBottom variant="h5">
+                        <Typography gutterBottom variant="h5" className={classes.text1}>
                             User Profile
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
-                            {name}
                         </Typography>
                         <div>
                             <img src={imageurl ? imageurl : imgbefore} alt="No Profile Picture" className={classes.picture} />
@@ -105,16 +118,16 @@ const CreateUserprofile = () => {
                                 <Add className={classes.addIcon} fontSize="large" color="action" />
                             </label>
                         </div>
-                        <Grid container spacing={1}>
-                            <Grid xs={12} sm={6} item>
-                                <input value={name} variant="outlined" disabled fullWidth />
+                        <Grid container spacing={1} direction="row" justifyContent="center" alignItems="center">
+                            <Grid item xs={7} >
+                                <input value={name} variant="outlined" disabled fullWidth className={classes.paddingadd}/>
                             </Grid>
-                            <Grid xs={12} sm={6} item>
-                                <input value={email} type='email' variant="outlined" disabled fullWidth />
+                            <Grid xs={7} item >
+                                <input value={email} type='email' variant="outlined" disabled fullWidth className={classes.paddingadd} />
                             </Grid>
                         </Grid>
-                        <Grid container spacing={1}>
-                            <Grid xs={12} sm={6} item>
+                        <Grid container spacing={1} direction="row" justifyContent="center" alignItems="center">
+                            <Grid xs={12} sm={12} item >
                                 <input
                                     name='picture'
                                     type="file"
@@ -123,17 +136,17 @@ const CreateUserprofile = () => {
                                     onChange={(e) => handleChange(e)}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <input defaultValue={userprofiledata.gender} name='gender' placeholder="Enter gender" onChange={(e) => handleChange(e)} variant="outlined" fullWidth />
+                            <Grid xs={7} item  >
+                                <input defaultValue={userprofiledata.gender} name='gender' placeholder="Enter gender" onChange={(e) => handleChange(e)} variant="outlined" fullWidth className={classes.paddingadd}/>
                             </Grid>
-                            <Grid item xs={12}>
-                                <input defaultValue={userprofiledata.phonenumber} name='phonenumber' type="number" onChange={(e) => handleChange(e)} placeholder="Enter phone number" variant="outlined" fullWidth />
+                            <Grid item xs={7} >
+                                <input defaultValue={userprofiledata.phonenumber} name='phonenumber' type="number" onChange={(e) => handleChange(e)} placeholder="Enter phone number" variant="outlined" fullWidth className={classes.paddingadd}/>
                             </Grid>
-                            <Grid item xs={12}>
-                                <input defaultValue={userprofiledata.bio} name='bio' multiline rows={3} onChange={(e) => handleChange(e)} placeholder="Type your bio here" variant="outlined" fullWidth />
+                            <Grid item xs={7} >
+                                <input defaultValue={userprofiledata.bio} name='bio' multiline rows={4} onChange={(e) => handleChange(e)} placeholder="Type your bio here" variant="outlined" fullWidth className={classes.paddingadd}/>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Button onClick={saveUserprofile} disabled={isFetching} variant="contained" color="primary" fullWidth>Save Changes</Button>
+                            <Grid item xs={7} >
+                                <Button onClick={saveUserprofile} disabled={isFetching} variant="contained" color="primary" style={{width:'90%'}}>Save Changes</Button>
                             </Grid>
                         </Grid>
                         {error && <Alert severity="error">
