@@ -36,7 +36,7 @@ exports.createorupdate = async function (req, res) {
     Userprofile.findOne({ where: { userId: req.params.id } }).then(user => {
       if (user !== null) {
           const userprofileId = user.id;
-          const picture = req.file?.path? req.file.path:""
+          const picture = req.file?.path ? req.file.path : '';
           const { gender, phonenumber, bio } = req.body
           return Userprofile
             .findByPk(userprofileId)
