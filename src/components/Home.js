@@ -1,7 +1,8 @@
-import Banner from '../components/Banner';
-import Categories from '../components/Categories'
-import Posts from '../components/Posts'
+import Banner from './Banner';
+import Categories from './Categories'
+import Posts from './Posts'
 import { Grid } from '@material-ui/core';
+
 const Home = () => {
     return (
         <>

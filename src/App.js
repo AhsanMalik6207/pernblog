@@ -7,14 +7,20 @@ import CreatePost from './components/CreatePost'
 import UpdatePost from './components/UpdatePost'
 import PostDetail from './components/PostDetail'
 import CreateUserprofile from './components/CreateUserprofile'
-import { Box } from '@material-ui/core';
+import { Box, ThemeProvider } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-
+import './index.css'
+import {createMuiTheme } from '@material-ui/core/styles'
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: ["'Quicksand'", 'sans-serif'].join(',')
+   }
+ })
 function App() {
   const user = useSelector((state) => state.user.currentUser);
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <BrowserRouter forceRefresh={true}>
         <Navbar />
         <Box style={{ margintop: 64 }}>
@@ -58,7 +64,7 @@ function App() {
           </Switch>
         </Box>
       </BrowserRouter>
-    </>
+      </ThemeProvider>
   );
 };
 export default App;

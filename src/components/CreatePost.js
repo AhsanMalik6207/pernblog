@@ -16,7 +16,7 @@ const useStyle = makeStyles(theme => ({
     },
     picture: {
         width: '100%',
-        height: '50vh',
+        height: '100vh',
         objectFit: 'cover'
     },
     form: {
@@ -134,12 +134,12 @@ const CreatePost = () => {
                             value={category}
                             onChange={handleMenu}
                         >
-                            <MenuItem value={1}>Music</MenuItem>
-                            <MenuItem value={2}>Movies</MenuItem>
-                            <MenuItem value={3}>Sports</MenuItem>
-                            <MenuItem value={4}>Tech</MenuItem>
-                            <MenuItem value={5}>Fashion</MenuItem>
-                            <MenuItem value={6}>News</MenuItem>
+                            <MenuItem value={3}>Music</MenuItem>
+                            <MenuItem value={4}>Movies</MenuItem>
+                            <MenuItem value={5}>Sports</MenuItem>
+                            <MenuItem value={6}>Tech</MenuItem>
+                            <MenuItem value={7}>Fashion</MenuItem>
+                            <MenuItem value={8}>News</MenuItem>
                         </Select>
                     </FormControl>
                 </div>

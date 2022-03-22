@@ -7,6 +7,8 @@ import { useHistory } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { postFailure, postStart, postSuccess } from "../redux/postRedux";
+import { Attachment } from '@material-ui/icons';
+import { PersonPin } from '@material-ui/icons';
 const useStyle = makeStyles(theme => ({
     container: {
         margin: '50px 100px',
@@ -15,9 +17,10 @@ const useStyle = makeStyles(theme => ({
         },
     },
     picture: {
-        width: '100%',
-        height: '50vh',
-        objectFit: 'cover'
+        width: "100%",
+        height: "50vh",
+        objectFit: "cover",
+        boxShadow: "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px"
     },
     form: {
         marginTop: 10,
@@ -28,16 +31,21 @@ const useStyle = makeStyles(theme => ({
         flex: 1,
         margin: '0 30px',
         fontSize: 25,
+        fontWeight:'600',
         border: 'none',
         backgroundColor: 'transparent',
         resize: 'none',
         outline: 'none',
+        fontFamily:"'Quicksand', 'sans-serif'"
     },
     textarea: {
         width: '100%',
         border: 'none',
         marginTop: 50,
+        borderLeft: "3px solid gray",
+        paddingLeft: "10px",
         fontSize: 18,
+        fontFamily:"'Quicksand', 'sans-serif'",
         '&:focus-visible': {
             outline: 'none'
         }
@@ -71,7 +79,6 @@ const UpdatePost = ({ match }) => {
         }
         getImage();
     }, [postdata.picture])
-
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8000/post/${match.params.id}`)
@@ -83,8 +90,7 @@ const UpdatePost = ({ match }) => {
         }
         fetchData()
     }, [])
-
-    const savePost = async () => {
+    async function savePost() {
         await updatePost(dispatch, postdata);
     }
     const handleChange = (e) => {
@@ -118,7 +124,7 @@ const UpdatePost = ({ match }) => {
                 <img src={url} alt="banner" className={classes.picture} />
                 <FormControl className={classes.form}>
                     <label htmlFor="fileInput">
-                        <Add className={classes.addIcon} fontSize="large" color="action" />
+                        <Attachment className={classes.addIcon} fontSize="large" color="action" />
                     </label>
                     <input
                         name='picture'
@@ -130,10 +136,12 @@ const UpdatePost = ({ match }) => {
                     <input name='title' defaultValue={postdata.title} placeholder="Title" onChange={(e) => handleChange(e)} className={classes.textfield} />
                     <Button onClick={() => savePost()} disabled={isFetching} variant="contained" color="primary">Publish</Button>
                 </FormControl>
+​
                 <TextareaAutosize
+                    
                     rowsMin={5}
                     name='description'
-                    placeholder="Tell your story..."
+                    placeholder="Start Writing!"
                     defaultValue={postdata.description}
                     className={classes.textarea}
                     onChange={(e) => handleChange(e)}
@@ -147,5 +155,4 @@ const UpdatePost = ({ match }) => {
         </>
     )
 }
-
 export default UpdatePost;

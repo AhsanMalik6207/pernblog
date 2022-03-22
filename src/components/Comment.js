@@ -3,15 +3,18 @@ import { Delete } from '@material-ui/icons';
 import {useState,useEffect} from 'react'
 import axios from "axios";
 import { useSelector } from 'react-redux';
+import { ArrowRight } from "@material-ui/icons";
 const useStyles = makeStyles({
     component: {
-        marginTop: 30,
-        background: '#F5F5F5',
-        padding: 10
-    },
+        width: "30%",
+margin:" 10px 125px",
+        background: '#F7F7F7',
+        padding: 10   
+     },
     container: {
         display: 'flex',
-        marginBottom: 5
+        marginBottom: 5,
+        alignItems:"center"
     },
     name: {
         fontWeight: 600,
@@ -24,9 +27,11 @@ const useStyles = makeStyles({
     },
     delete: {
         marginLeft: 'auto'
+    },
+    commFlex:{
+        display: "flex"
     }
 })
-
 const Comment = ({ comment, setToggle }) => {
     const classes = useStyles();
     const commentid = comment.id;
@@ -69,7 +74,7 @@ const Comment = ({ comment, setToggle }) => {
                         : null
                 }
             </Box>
-            <Typography>{comment.commenttext}</Typography>
+            <Typography className={classes.commFlex}><ArrowRight/> {comment.commenttext}</Typography>
         </Box>
     )
 }
