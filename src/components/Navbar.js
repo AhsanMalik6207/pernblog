@@ -22,7 +22,7 @@ const useStyle = makeStyles(theme => ({
     component: {
         background: '#F5EBEB !important' ,
         color: 'black !important',
-        height: '13vh'
+        height: '12vh'
     },
     link: {
         textDecoration: 'none',

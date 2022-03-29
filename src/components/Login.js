@@ -6,10 +6,11 @@ import { useState ,useEffect} from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginFailure, loginStart, loginSuccess } from "../redux/userRedux";
-
 const useStyles = makeStyles((theme) => ({
-    paperStyle: { marginTop: 115, padding: 20, height: '70vh', width: 280, margin: "20px auto", },
+    paperStyle: { marginTop: 115, padding: 20, height: '55vh', width: 350, margin: "20px auto", },
     avatarStyle: { backgroundColor: '#1bbd7e' },
+    emailField:{margin:'20px 0px'},
+    PassField:{margin:'10px 0px'},
     btnstyle: { margin: '8px 0' },
     spanstyle: { color: "red", marginTop: "10px" }
 }));
@@ -51,8 +52,8 @@ const Login = () => {
                     <Avatar className={classes.avatarStyle}><LoginIcon /></Avatar>
                     <h2>Sign In</h2>
                 </Grid>
-                <TextField label='Email' placeholder='Enter email' type='email' onChange={(e) => setEmail(e.target.value)} fullWidth required />
-                <TextField label='Password' placeholder='Enter password' type='password' onChange={(e) => setPassword(e.target.value)} fullWidth required />
+                <TextField className={classes.emailField} variant='filled' label='Email' placeholder='Enter email' type='email' onChange={(e) => setEmail(e.target.value)} fullWidth required />
+                <TextField className={classes.PassField} variant='filled' label='Password' placeholder='Enter password' type='password' onChange={(e) => setPassword(e.target.value)} fullWidth required />
                 <Button  color='primary' onClick={handleSubmit} disabled={isFetching} variant="contained" className={classes.btnstyle} fullWidth>Sign in</Button>
                 {error && <Box component="span" className={classes.spanstyle}>Email or Password is Incorrect!</Box>}
                 <Typography > Do you have an account?
@@ -64,5 +65,5 @@ const Login = () => {
         </Grid>
     )
 }
-
 export default Login
+

@@ -1,33 +1,31 @@
-import { Button, Table, TableHead, TableRow, TableCell, TableBody, makeStyles } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { categories } from './data';
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { categoryFailure, categoryStart, categorySuccess } from "../redux/categoryRedux";
+import './category.css'
 const useStyle = makeStyles({
-    button:{
-        color: '#E1D9D1',
-        border: '1px solid #00d5ff',
-        marginRight: '10px',
-        marginBottom: '10px',
-        marginTop:'5px',
-        padding: '8px',
-        borderRadius: '10px',
-        backgroundColor: '#2B547E',
-        boxShadow: 'silver 3px 3px 3px 0',
-    },
-    create: {
-        margin: 20,
-        width: '85%',
-        background: '#6495ED',
-        color: '#fff',
-    },
+   button:{
+margin:5,
+width: '43%',
+background: 'inherit',
+   },
+    
     table: {
-        border: '1px solid rgba(224, 224, 224, 1)'
+        listStyle:'none',
+        width:'100%',
     },
-    link: {
-        textDecoration: 'none',
-        color: 'inherit'
+    name:{
+        color:"gray",
     },
+    data:{
+        fontSize:25,
+        marginTop:10,
+        fontWeight:600,
+    }
+
+
+
 })
 
 const Categories = () => {
@@ -43,23 +41,22 @@ const Categories = () => {
             dispatch(categoryFailure());
         }
     }
+    const borderRemove = {textDecoration:'none'}
     return (
         <>
-            <Link to='createpost' className={classes.link}>
-                <Button variant="contained" className={classes.create}>Create Blog</Button>
+            <Link to='createpost' style={borderRemove}>
+                <Button variant="contained"  className='button' style={{ fontSize: '18px' }} >Create Blog</Button>
             </Link>
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>
-                            Categories
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {Object.keys(categories).map((key) => <button className={classes.button} key={key} value={categories[key]} onClick={handleClick}>{key}</button>)}
-                </TableBody>
-            </Table>
+            <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+     <div className={classes.data}>Categories</div> 
+    </div>
+    <ul class="nav navbar-nav">
+      <li>{Object.keys(categories).map((key) => <Button variant="text" className={classes.button}  style={{ fontSize: '14px' }} key={key} value={categories[key]} onClick={handleClick}>{key}</Button>)}</li>
+    </ul>
+  </div>
+</nav>
         </>
     )
 }

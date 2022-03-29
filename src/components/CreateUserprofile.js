@@ -158,7 +158,6 @@ const CreateUserprofile = () => {
                 </Card>
             </Grid>
         </div>
-
     )
 }
 export default CreateUserprofile;

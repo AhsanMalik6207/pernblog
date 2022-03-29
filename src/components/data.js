@@ -1,9 +1,9 @@
 export const categories = {
     All: '',
-    Music: 2,
-    Movies: 3,
-    Sports: 4,
-    Tech: 5,
-    Fashion: 6,
-    News: 7,
+    Music: 3,
+    Movies: 4,
+    Sports: 5,
+    Tech: 6,
+    Fashion: 7,
+    News: 8,
 };
